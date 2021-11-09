@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mymoney_test_1/ui/month_view.dart';
+import 'package:mymoney_test_1/ui/tela_despesas_top.dart';
 
 class TelaDespesas extends StatefulWidget {
   const TelaDespesas({Key? key}) : super(key: key);
@@ -12,53 +14,20 @@ class _TelaDespesasState extends State<TelaDespesas> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueAccent,
+      backgroundColor: Color(0xFF33429F),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            TelaDespesasTop(),
+            MonthView(),
             Container(
-              padding: EdgeInsets.fromLTRB(10.0, 40.0, 5.0, 1.0),
-              child: Row(
-                children: <Widget>[
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.arrow_back),
-                    iconSize: 30.0,
-                    color: Colors.white,
-                  ),
-                  Text("Despesas",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 27.0,
-                        fontWeight: FontWeight.w500,
-                      ))
-                ],
-              ),
-            ),
-            Center(
-              child: Container(
-                //padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-                height: 80,
-                width: 80,
-                color: Colors.transparent,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    Center(child: Text("Janeiro",style: TextStyle(fontSize: 18.0,fontFamily: 'Montserrat',color: Colors.white),),),
-                    Center(child: Text("       "),),
-                    Center(child: Text("Fevereiro",style: TextStyle(fontSize: 18.0,fontFamily: 'Montserrat',color: Colors.white),),),
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.all(0),
+              padding: EdgeInsets.only(top: 20.0),
               height: MediaQuery.of(context).size.height,
               width: double.infinity,
               color: Colors.transparent,
               child: Container(
                   decoration: new BoxDecoration(
-                      color: Colors.white,
+                      color: Color(0xFFC4C9EB),
                       borderRadius: BorderRadius.only(
                         topLeft: const Radius.circular(40.0),
                         topRight: const Radius.circular(40.0),
@@ -67,6 +36,46 @@ class _TelaDespesasState extends State<TelaDespesas> {
                       )),
                   child: Column(
                     children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 0.0),
+                        height: 80,
+                        width: 395,
+                        color: Colors.transparent,
+                        child: Container(
+                          decoration: new BoxDecoration(
+                              color: Colors.transparent,
+                              borderRadius: BorderRadius.only(
+                                topLeft: const Radius.circular(40.0),
+                                topRight: const Radius.circular(40.0),
+                              )),
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.lock_clock_outlined,
+                              size: 40.0,
+                              color: Colors.black,
+                            ),
+                            title: const Text(
+                              'Total',
+                              style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontFamily: 'Raleway',
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Text(
+                              '350,00',
+                              style:
+                                  TextStyle(color: Color(0xFFCF2323), fontSize: 30.0,fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Divider(
+                        height: 5.0,
+                        color: Colors.black,
+                        thickness: 1.0,
+                        indent: 15.0,
+                        endIndent: 15.0,
+                      )
                     ],
                   )),
             ),
@@ -74,8 +83,9 @@ class _TelaDespesasState extends State<TelaDespesas> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.red,
-        child: Icon(Icons.add),
+        backgroundColor: Color(0xFFCF2323),
+        elevation: 6,
+        child: Icon(Icons.add,),
         onPressed: () {},
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
