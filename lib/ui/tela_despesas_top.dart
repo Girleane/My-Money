@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mymoney_test_1/ui/month_view.dart';
 
 class TelaDespesasTop extends StatelessWidget {
   const TelaDespesasTop({Key? key}) : super(key: key);
@@ -6,13 +8,12 @@ class TelaDespesasTop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final screenSize = MediaQuery.of(context).size;
-
     return Container(
         /*padding: EdgeInsets.fromLTRB(10.0, 40.0, 5.0, 10.0),*/
-      height: screenSize.height * 0.13,
+      height: MediaQuery.of(context).size.height*0.2,
         child: SafeArea(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -34,6 +35,7 @@ class TelaDespesasTop extends StatelessWidget {
                   IconButton(onPressed: (){}, icon: Icon(Icons.search_sharp,color: Colors.white,size: 30.0,))
                 ],
               ),
+              MonthView(),
             ],
           ),
         ));
