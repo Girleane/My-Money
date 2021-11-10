@@ -10,7 +10,7 @@ class TelaDespesasTop extends StatelessWidget {
 
     return Container(
         /*padding: EdgeInsets.fromLTRB(10.0, 40.0, 5.0, 10.0),*/
-      height: MediaQuery.of(context).size.height*0.2,
+      height: MediaQuery.of(context).size.height*0.24,
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

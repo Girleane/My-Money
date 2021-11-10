@@ -12,7 +12,7 @@ class ListData extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 70,
-      width: 380,
+      width: MediaQuery.of(context).size.width*0.1,
       decoration: BoxDecoration(
         color: Colors.transparent,
         border: Border(

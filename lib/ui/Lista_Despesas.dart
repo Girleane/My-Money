@@ -12,6 +12,7 @@ class _ListaDepesasState extends State<ListaDepesas> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
             height: MediaQuery.of(context).size.height*0.1,
@@ -46,15 +47,28 @@ class _ListaDepesasState extends State<ListaDepesas> {
             indent: 15.0,
             endIndent: 15.0,
           ),
-      ListData(
-          'Alimentação',
-          Icon(
-            Icons.account_balance_wallet_rounded,
-            size: 30,
-            color: Colors.white,
-          ),
-          '09/11/2021',
-          350),
+      Container(
+        width: MediaQuery.of(context).size.width*0.95,
+        height: MediaQuery.of(context).size.height*0.15,
+        alignment: Alignment.topCenter,
+        child: ListView.builder(
+          padding: EdgeInsets.all(1),
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index){
+            return ListData(
+                'Alimentação',
+                Icon(
+                  Icons.account_balance_wallet_rounded,
+                  size: 30,
+                  color: Colors.white,
+                ),
+                '09/11/2021',
+                350);
+          },
+          itemCount: 1,
+        ),
+      ),
     ]);
   }
 }

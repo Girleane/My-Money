@@ -21,7 +21,7 @@ class _TelaDespesasState extends State<TelaDespesas> {
         child: Column(children: [
           TelaDespesasTop(),
           SizedBox(
-            height: MediaQuery.of(context).size.height*1.2,
+            height: MediaQuery.of(context).size.height*1.5,
             child: Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
