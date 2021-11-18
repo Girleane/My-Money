@@ -1,8 +1,16 @@
+//import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mymoney_test_1/ui/ListData.dart';
+import 'package:mymoney_test_1/ui/total_despesas.dart';
+//import 'package:mymoney_test_1/ui/add_despesas.dart';
 
 class ListaDepesas extends StatefulWidget {
-  const ListaDepesas({Key? key}) : super(key: key);
+
+  final List despesaList;
+
+  ListaDepesas(this.despesaList);
 
   @override
   _ListaDepesasState createState() => _ListaDepesasState();
@@ -11,64 +19,37 @@ class ListaDepesas extends StatefulWidget {
 class _ListaDepesasState extends State<ListaDepesas> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height*0.1,
-            width: MediaQuery.of(context).size.width,
-            color: Colors.transparent,
-            child: ListTile(
-              leading: Icon(
-                Icons.lock_clock_outlined,
-                size: 40.0,
-                color: Colors.black,
-              ),
-              title: const Text(
-                'Total',
-                style: TextStyle(
-                    fontSize: 20.0,
-                    fontFamily: 'Raleway',
-                    fontWeight: FontWeight.bold),
-              ),
-              subtitle: Text(
-                '350,00',
-                style: TextStyle(
-                    color: Color(0xFFCF2323),
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
-          Divider(
-            height: 5.0,
-            color: Colors.black,
-            thickness: 1.0,
-            indent: 15.0,
-            endIndent: 15.0,
-          ),
-      Container(
-        width: MediaQuery.of(context).size.width*0.95,
-        height: MediaQuery.of(context).size.height*0.15,
-        alignment: Alignment.topCenter,
-        child: ListView.builder(
-          padding: EdgeInsets.all(1),
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index){
-            return ListData(
-                'Alimentação',
-                Icon(
-                  Icons.account_balance_wallet_rounded,
-                  size: 30,
-                  color: Colors.white,
+    return DraggableScrollableSheet(
+        initialChildSize: 0.8,
+        minChildSize: 0.8,
+        maxChildSize: 1,
+        builder: (context, controller) => ClipRRect(
+          borderRadius: BorderRadius.only(topRight: Radius.circular(40),topLeft: Radius.circular(40)),
+          child: Container(
+                color: Color(0xFFC4C9EB),
+                child: Stack(
+                  children: [
+                    TotalDespesas(widget.despesaList),
+                    Container(
+                      padding: EdgeInsets.only(top: 75,left: 10,right: 10),
+                      child: ListView.builder(
+                        itemCount: widget.despesaList.length,
+                        controller: controller,
+                        itemBuilder: (context, index) {
+                          return ListData(
+                              widget.despesaList[index]["title"],
+                              Icon(
+                                Icons.account_balance_wallet_rounded,
+                                size: 30,
+                                color: Colors.white,
+                              ),
+                              widget.despesaList[index]["subtitle"],
+                              widget.despesaList[index]["value"]);
+                        }),
+                    ),
+                  ]
                 ),
-                '09/11/2021',
-                350);
-          },
-          itemCount: 1,
-        ),
-      ),
-    ]);
+              ),
+        ));
   }
 }

@@ -39,32 +39,35 @@ class _MonthViewState extends State<MonthView> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        IconButton(
-          onPressed: _month > 0 ? selectBackward : null,
-          disabledColor: Colors.white30,
-          icon: Icon(Icons.arrow_back_ios),
-          color: Colors.white,
-        ),
-        Text(
-          months[_month],
-          style: TextStyle(
-              fontFamily: 'Raleway',
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1.0,
-              fontSize: 20.0,
-              color: Colors.white),
-        ),
-        IconButton(
-          onPressed: _month < months.length - 1 ? selectFoward : null,
-          disabledColor: Colors.white30,
-          icon: Icon(Icons.arrow_forward_ios),
-          color: Colors.white,
-        ),
-      ],
+    return Container(
+      padding: EdgeInsets.all(15),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          IconButton(
+            onPressed: _month > 0 ? selectBackward : null,
+            disabledColor: Colors.white30,
+            icon: Icon(Icons.arrow_back_ios),
+            color: Colors.white,
+          ),
+          Text(
+            months[_month],
+            style: TextStyle(
+                fontFamily: 'Raleway',
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.0,
+                fontSize: 20.0,
+                color: Colors.white),
+          ),
+          IconButton(
+            onPressed: _month < months.length - 1 ? selectFoward : null,
+            disabledColor: Colors.white30,
+            icon: Icon(Icons.arrow_forward_ios),
+            color: Colors.white,
+          ),
+        ],
+      ),
     );
   }
 }
