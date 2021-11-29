@@ -10,6 +10,8 @@ final String nameColumn = "nameColumn";
 final String descricaoColumn = "descricaoColumn";
 final String imgColumn = "imgColumn";
 
+final String doneColumn = "doneColumn";
+
 class MetaHelper {
   static final MetaHelper _instance = MetaHelper.internal();
 
@@ -30,13 +32,13 @@ class MetaHelper {
 
   Future<Database> initDb() async {
     final databasesPath = await getDatabasesPath();
-    final path = join(databasesPath, "metas1.db");
+    final path = join(databasesPath, "metastree.db");
 
     return await openDatabase(path, version: 1,
         onCreate: (Database db, int newerVersion) async {
       await db.execute(
           "CREATE TABLE $metaTable($idColumn INTEGER PRIMARY KEY, $valorInicialColumn TEXT, $valorMetaColumn TEXT,"
-          "$previsaoColumn TEXT, $nameColumn TEXT, $descricaoColumn TEXT, $imgColumn TEXT)");
+          "$previsaoColumn TEXT, $nameColumn TEXT, $descricaoColumn TEXT, $imgColumn TEXT, $doneColumn TEXT)");
     });
   }
 
@@ -56,7 +58,8 @@ class MetaHelper {
           previsaoColumn,
           nameColumn,
           descricaoColumn,
-          imgColumn
+          imgColumn,
+          doneColumn
         ],
         where: "$idColumn = ?",
         whereArgs: [id]);
@@ -110,6 +113,8 @@ class Meta {
   String descricao;
   String img;
 
+  String done;
+
   Meta();
 
   Meta.fromMap(Map map) {
@@ -120,6 +125,8 @@ class Meta {
     name = map[nameColumn];
     descricao = map[descricaoColumn];
     img = map[imgColumn];
+
+    done = map[doneColumn];
   }
 
   Map<String, dynamic> toMap() {
@@ -129,7 +136,9 @@ class Meta {
       previsaoColumn: previsao,
       nameColumn: name,
       descricaoColumn: descricao,
-      imgColumn: img
+      imgColumn: img,
+
+      doneColumn: done
     };
     if (id != null) {
       map[idColumn] = id;

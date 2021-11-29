@@ -20,12 +20,13 @@ class _MetasAddPageState extends State<MetasAddPage> {
   TextEditingController _previsaoController = TextEditingController();
   TextEditingController _nomeController = TextEditingController();
   TextEditingController _descricaoController = TextEditingController();
+  TextEditingController _doneController = TextEditingController();
 
   final _nameFocus = FocusNode();
+  final _valorMetaFocus = FocusNode();
+  final _valorInicialFocus = FocusNode();
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  String _infoText = "Informe seus dados!";
 
   void _resetFields() {
     _valorMetaController.text = "";
@@ -33,8 +34,8 @@ class _MetasAddPageState extends State<MetasAddPage> {
     _previsaoController.text = "";
     _nomeController.text = "";
     _descricaoController.text = "";
+    _doneController.text = "";
     setState(() {
-      _infoText = "Informe seus dados!";
       _formKey = GlobalKey<FormState>();
     });
   }
@@ -52,6 +53,7 @@ class _MetasAddPageState extends State<MetasAddPage> {
       _previsaoController.text = _editedMeta.previsao;
       _nomeController.text = _editedMeta.name;
       _descricaoController.text = _editedMeta.descricao;
+      _doneController.text = _editedMeta.done;
     }
   }
 
@@ -88,10 +90,13 @@ class _MetasAddPageState extends State<MetasAddPage> {
             ]),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            if (_editedMeta.name != null && _editedMeta.name.isNotEmpty) {
+            if (_editedMeta.name != null && _editedMeta.name.isNotEmpty &&
+                _editedMeta.valorMeta.isNotEmpty && _editedMeta.valorInicial.isNotEmpty) {
               Navigator.pop(context, _editedMeta);
             } else {
               FocusScope.of(context).requestFocus(_nameFocus);
+              FocusScope.of(context).requestFocus(_valorInicialFocus);
+              FocusScope.of(context).requestFocus(_valorMetaFocus);
             }
           },
           child: Icon(Icons.done),
@@ -100,54 +105,62 @@ class _MetasAddPageState extends State<MetasAddPage> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         backgroundColor: Colors.blueMoney,
         body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.all(0.0),
-              ),
-              Container(
-                color: Colors.blueMoney,
-                padding: EdgeInsets.fromLTRB(70.0, 30.0, 10.0, 30.0),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Valor da meta:',
-                        style: TextStyle(
-                          fontFamily: 'LilitaOne',
-                          color: Colors.white,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(0.0),
+                ),
+                Container(
+                  color: Colors.blueMoney,
+                  padding: EdgeInsets.fromLTRB(70.0, 30.0, 10.0, 30.0),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Valor da meta:',
+                          style: TextStyle(
+                            fontFamily: 'LilitaOne',
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                      Text(''),
-                      TextFormField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          labelText: "R\$",
-                          labelStyle: TextStyle(
-                              fontFamily: 'LilitaOne',
-                              fontSize: 35.0,
-                              color: Colors.white),
-                          border: InputBorder.none,
+                        Text(''),
+                        TextFormField(
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: "R\$",
+                            labelStyle: TextStyle(
+                                fontFamily: 'LilitaOne',
+                                fontSize: 35.0,
+                                color: Colors.white),
+                            border: InputBorder.none,
+                          ),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.white, fontSize: 35.0),
+                          controller: _valorMetaController,
+                          focusNode: _valorMetaFocus,
+                          onChanged: (text) {
+                            _metaEdited = true;
+                            setState(() {
+                              _editedMeta.valorMeta = text;
+                              _metaFinished();
+                            });
+                          },
+                          validator: (String value) {
+                            String msg = "";
+                            if (value.isEmpty) {
+                              msg = "Insira um dado!";
+                            }
+                            return msg;
+                          },
                         ),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white, fontSize: 35.0),
-                        controller: _valorMetaController,
-                        onChanged: (text) {
-                          _metaEdited = true;
-                          _editedMeta.valorMeta = text;
-                        },
-                        validator: (String value) {
-                          if (value.isEmpty) {
-                            return "Insira um dado!";
-                          }
-                        },
-                      ),
-                    ]),
-              ),
-              Container(
+                      ]),
+                ),
+                Container(
                   height: 420.0,
                   decoration: BoxDecoration(
                       color: Colors.iceMoney,
@@ -173,9 +186,13 @@ class _MetasAddPageState extends State<MetasAddPage> {
                           style: TextStyle(
                               color: Colors.deepPurple, fontSize: 25.0),
                           controller: _valorInicialController,
+                          focusNode: _valorInicialFocus,
                           onChanged: (text) {
                             _metaEdited = true;
-                            _editedMeta.valorInicial = text;
+                            setState(() {
+                              _editedMeta.valorInicial = text;
+                              _metaFinished();
+                            });
                           },
                           validator: (String value) {
                             if (value.isEmpty) {
@@ -190,7 +207,7 @@ class _MetasAddPageState extends State<MetasAddPage> {
                                 Icons.access_time,
                                 color: Colors.black,
                               ),
-                              labelText: "Previsão da meta (data)",
+                              labelText: "Previsão da meta (dd/MM/yyyy)",
                               labelStyle: TextStyle(color: Colors.black)),
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -199,6 +216,7 @@ class _MetasAddPageState extends State<MetasAddPage> {
                           onChanged: (text) {
                             _metaEdited = true;
                             _editedMeta.previsao = text;
+                            _metaFinished();
                           },
                           validator: (String value) {
                             if (value.isEmpty) {
@@ -224,6 +242,7 @@ class _MetasAddPageState extends State<MetasAddPage> {
                             _metaEdited = true;
                             setState(() {
                               _editedMeta.name = text;
+                              _metaFinished();
                             });
                           },
                           validator: (String value) {
@@ -248,6 +267,7 @@ class _MetasAddPageState extends State<MetasAddPage> {
                           onChanged: (text) {
                             _metaEdited = true;
                             _editedMeta.descricao = text;
+                            _metaFinished();
                           },
                           validator: (String value) {
                             if (value.isEmpty) {
@@ -255,8 +275,10 @@ class _MetasAddPageState extends State<MetasAddPage> {
                             }
                           },
                         ),
-                      ])),
-            ],
+                      ]),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -292,4 +314,15 @@ class _MetasAddPageState extends State<MetasAddPage> {
       return Future.value(true);
     }
   }
+
+  String _metaFinished(){
+    if(int.parse(_editedMeta.valorInicial) >= int.parse(_editedMeta.valorMeta)) {
+      _editedMeta.done = "ok";
+    }
+    else{
+      _editedMeta.done = "NotOk";
+    }
+      return _editedMeta.done;
+  }
+
 }
