@@ -247,10 +247,10 @@ class _MetasHomePageState extends State<MetasHomePage> {
           shape:
           RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(60.0),
-                  topLeft: Radius.circular(60.0),
-                  bottomLeft: Radius.circular(60.0),
-                  bottomRight: Radius.circular(60.0),)
+                  topRight: Radius.circular(5.0),
+                  topLeft: Radius.circular(5.0),
+                  bottomLeft: Radius.circular(5.0),
+                  bottomRight: Radius.circular(5.0),)
           ),
           color: Colors.iceMoney,
           elevation: 10.0,
