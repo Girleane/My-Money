@@ -29,22 +29,22 @@ class _GraficoState extends State<Grafico> {
   List<Map<String, double>> receitas = [
     {'Janeiro': 1000.0, 'teste1': 1500.0},
     {'Fevereiro': 25560.0, 'teste2': 250.0},
-    {'Março': 350.0, 'teste3': 34550.0},
-    {'Abril': 450.0},
-    {'Maio': 550.0},
-    {'junho': 650.0},
+    {'Março': 3504.0, 'teste3': 3450.0},
+    {'Abril': 4540.0},
+    {'Maio': 5540.0},
+    {'junho': 6501.0},
     {'Julho': 750.0},
-    {'Agosto': 850.0},
-    {'Setembro': 950.0},
-    {'Outubro': 1050.0},
-    {'Novembro': 1150.0},
+    {'Agosto': 8150.0},
+    {'Setembro': 9520.0},
+    {'Outubro': 15050.0},
+    {'Novembro': 112550.0},
     {'Dezembro': 1250.0}
   ];
   List<Map<String, double>> gastos = [
     {'Janeiro': 150.0, 'Janeiro2': 300.0},
     {'Fevereiro': 250.0, 'Fevereiro2': 2550.0},
-    {'Março': 350.0, 'Março3': 3450.0},
-    {'Abril': 450.0},
+    {'Março': 350.0, 'Março3': 95450.0},
+    {'Abril': 4540.0},
     {'Maio': 550.0},
     {'junho': 650.0},
     {'Julho': 750.0},
@@ -251,8 +251,7 @@ class _GraficoState extends State<Grafico> {
                               int indicador = 0;
                               if (index + 1 <= receitas[_month].keys.length) {
                                 keys = receitas[_month].keys.elementAt(index);
-                                values =
-                                    receitas[_month].values.elementAt(index);
+                                values = receitas[_month].values.elementAt(index);
                                 percentual = (values * 100) / soma_receita;
                                 percentual = percentual.toStringAsFixed(2);
                                 values = values.toStringAsFixed(2);
