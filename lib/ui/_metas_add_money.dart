@@ -15,6 +15,8 @@ class _MetaAddMoneyState extends State<MetasAddMoney> {
   bool _metaEdited = false;
   Meta _editedMeta;
 
+  /*Controladores de texto utilizados para editar e
+  * resetar compos de texto*/
   TextEditingController _valorMetaController = TextEditingController();
   TextEditingController _valorInicialController = TextEditingController();
   TextEditingController _doneController = TextEditingController();
@@ -67,6 +69,13 @@ class _MetaAddMoneyState extends State<MetasAddMoney> {
             );
           },
         ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.refresh),
+              tooltip: 'Show Snackbar',
+              onPressed: _resetFields,
+            ),
+          ]
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -86,50 +95,78 @@ class _MetaAddMoneyState extends State<MetasAddMoney> {
         child: Form(
           key: _formKey,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: EdgeInsets.only(bottom: 250.0),
+                padding: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 0.0),
+                child: Container(
+                  height: 150.0,
+                  decoration: BoxDecoration(
+                      color: Colors.iceMoney,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(40.0),
+                        topRight: Radius.circular(40.0),
+                        bottomLeft: Radius.circular(40.0),
+                        bottomRight: Radius.circular(40.0),
+                      )),
+                  padding: EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 0.0),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextFormField(
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                              icon: Icon(
+                                Icons.local_atm,
+                                color: Colors.black,
+                              ),
+                              labelText: "Quanto deseja adicionar?",
+                              labelStyle: TextStyle(color: Colors.black)),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Colors.deepPurple, fontSize: 25.0),
+                          controller: _valorInicialController,
+                          focusNode: _valorInicialFocus,
+                          onChanged: (text) {
+                            _metaEdited = true;
+                            double init = double.parse(widget.meta.valorInicial);
+                            double total = init + double.parse(text);
+                            setState(() {
+                              _editedMeta.valorInicial =  total.toStringAsFixed(0);
+                              _metaFinished();
+                            });
+                          },
+                        ),
+                      ]),
+                ),
               ),
-              Container(
-                height: 380.0,
-                decoration: BoxDecoration(
-                    color: Colors.iceMoney,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25.0),
-                      topRight: Radius.circular(25.0),
-                    )),
-                padding: EdgeInsets.fromLTRB(10.0, 60.0, 10.0, 10.0),
+              Padding(
+                padding: EdgeInsets.fromLTRB(100.0, 30.0, 100.0, 50.0),
                 child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextFormField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                            icon: Icon(
-                              Icons.local_atm,
-                              color: Colors.black,
-                            ),
-                            labelText: "Quanto deseja adicionar?",
-                            labelStyle: TextStyle(color: Colors.black)),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.deepPurple, fontSize: 25.0),
-                        controller: _valorInicialController,
-                        focusNode: _valorInicialFocus,
-                        onChanged: (text) {
-                          _metaEdited = true;
-                          double init = double.parse(widget.meta.valorInicial);
-                          double total = init + double.parse(text);
-                          setState(() {
-                            _editedMeta.valorInicial =  total.toStringAsFixed(0);
-                            _metaFinished();
-                          });
-                        },
+                  children: [
+                    Container(
+                      width: 200.0,
+                      height: 200.0,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: AssetImage("images/myMoney.png"),
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ]),
+                    ),
+                    Text(
+                      "Invista no seu futuro!",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 22.0,
+                        fontFamily: 'lilitaOne',
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -138,7 +175,8 @@ class _MetaAddMoneyState extends State<MetasAddMoney> {
     );
   }
 
-
+  /* Atribui uma "etiqueta/label" a meta no banco de dados definido-a como
+  * concluida ou não concluida*/
   String _metaFinished(){
     if(double.parse(_editedMeta.valorInicial) >= double.parse(widget.meta.valorMeta)) {
       _editedMeta.done = "ok";
@@ -148,6 +186,5 @@ class _MetaAddMoneyState extends State<MetasAddMoney> {
     }
     return _editedMeta.done;
   }
-
 
 }

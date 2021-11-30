@@ -15,6 +15,8 @@ class _MetasAddPageState extends State<MetasAddPage> {
   bool _metaEdited = false;
   Meta _editedMeta;
 
+  /*Controladores de texto utilizados para editar e
+  * resetar compos de texto*/
   TextEditingController _valorMetaController = TextEditingController();
   TextEditingController _valorInicialController = TextEditingController();
   TextEditingController _previsaoController = TextEditingController();
@@ -28,6 +30,7 @@ class _MetasAddPageState extends State<MetasAddPage> {
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  /*Reseta os campos de texto*/
   void _resetFields() {
     _valorMetaController.text = "";
     _valorInicialController.text = "";
@@ -87,7 +90,8 @@ class _MetasAddPageState extends State<MetasAddPage> {
                 tooltip: 'Show Snackbar',
                 onPressed: _resetFields,
               ),
-            ]),
+            ]
+        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             if (_editedMeta.name != null && _editedMeta.name.isNotEmpty &&
@@ -111,9 +115,6 @@ class _MetasAddPageState extends State<MetasAddPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: EdgeInsets.all(0.0),
-                ),
                 Container(
                   color: Colors.blueMoney,
                   padding: EdgeInsets.fromLTRB(70.0, 30.0, 10.0, 30.0),
@@ -315,6 +316,8 @@ class _MetasAddPageState extends State<MetasAddPage> {
     }
   }
 
+  /* Atribui uma "etiqueta/label" a meta no banco de dados definido-a como
+  * concluida ou não concluida*/
   String _metaFinished(){
     if(int.parse(_editedMeta.valorInicial) >= int.parse(_editedMeta.valorMeta)) {
       _editedMeta.done = "ok";
