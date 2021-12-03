@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 class TotalDespesas extends StatefulWidget {
 
-  final List despesaList;
+  final saldoTotal;
 
-  TotalDespesas(this.despesaList);
+  TotalDespesas(this.saldoTotal);
 
   @override
   _TotalDespesasState createState() => _TotalDespesasState();
@@ -15,7 +15,6 @@ class TotalDespesas extends StatefulWidget {
 class _TotalDespesasState extends State<TotalDespesas> {
   @override
   Widget build(BuildContext context) {
-
     return Container(
       child: Column(
         children: [
@@ -33,7 +32,7 @@ class _TotalDespesasState extends State<TotalDespesas> {
                   fontWeight: FontWeight.bold),
             ),
             subtitle: Text(
-              'R\$12,80',
+              'R\$ ${widget.saldoTotal}',
               style: TextStyle(
                   fontSize: 25.0,
                   color: Color(0xFFCF2323),

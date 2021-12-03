@@ -2,15 +2,17 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mymoney_test_1/helpers/despesas_helper.dart';
 import 'package:mymoney_test_1/ui/ListData.dart';
 import 'package:mymoney_test_1/ui/total_despesas.dart';
 //import 'package:mymoney_test_1/ui/add_despesas.dart';
 
 class ListaDepesas extends StatefulWidget {
 
-  final List despesaList;
+  final List<Despesa> despesaList;
+  final saldoTotal;
 
-  ListaDepesas(this.despesaList);
+  ListaDepesas(this.despesaList,this.saldoTotal);
 
   @override
   _ListaDepesasState createState() => _ListaDepesasState();
@@ -29,7 +31,7 @@ class _ListaDepesasState extends State<ListaDepesas> {
                 color: Color(0xFFC4C9EB),
                 child: Stack(
                   children: [
-                    TotalDespesas(widget.despesaList),
+                    TotalDespesas(widget.saldoTotal),
                     Container(
                       padding: EdgeInsets.only(top: 75,left: 10,right: 10),
                       child: ListView.builder(
@@ -37,14 +39,14 @@ class _ListaDepesasState extends State<ListaDepesas> {
                         controller: controller,
                         itemBuilder: (context, index) {
                           return ListData(
-                              widget.despesaList[index]["title"],
+                              widget.despesaList[index].title!,
                               Icon(
                                 Icons.account_balance_wallet_rounded,
                                 size: 30,
                                 color: Colors.white,
                               ),
-                              widget.despesaList[index]["subtitle"],
-                              widget.despesaList[index]["value"]);
+                              widget.despesaList[index].subtitle!,
+                              widget.despesaList[index].value!);
                         }),
                     ),
                   ]

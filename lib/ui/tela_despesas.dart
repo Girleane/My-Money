@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import 'dart:convert';
-import 'dart:io';
-import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mymoney_test_1/ui/Lista_Despesas.dart';
-import 'package:mymoney_test_1/ui/month_view.dart';
-
+import 'package:table_calendar/table_calendar.dart';
+import 'package:mymoney_test_1/helpers/despesas_helper.dart';
 import 'add_despesas.dart';
+
 
 class TelaDespesas extends StatefulWidget {
 
@@ -18,24 +17,35 @@ class TelaDespesas extends StatefulWidget {
 
 class _TelaDespesasState extends State<TelaDespesas> {
 
-  List despesaList = [];
+  DespesaHelper helper = DespesaHelper();
+
+  var dataAtual = DateTime.now();
+  var formatter = DateFormat('dd/MM/yyyy');
+  var formatterCalendar = DateFormat('MM/yyyy');
+
+  var total;
+  DateTime? focusedDate;
+  String? saldoAtual;
+  String? dataFormatada;
+
+  List<Despesa> despesa = [];
 
   @override
   void initState() {
     super.initState();
-    _readData().then((data) {
-      setState(() {
-        despesaList = json.decode(data);
-      });
+    //_getAllDespesas();
+    setState(() {
+      dataFormatada = formatterCalendar.format(dataAtual);
+      _allDespMes(dataFormatada!);
     });
+    //helper.deleteDespesa(5);
   }
 
   @override
   Widget build(BuildContext context) {
 
-
     final height = MediaQuery.of(context).size.height;
-
+    //_allDespMes(dataFormatada!);
     return Scaffold(
       backgroundColor: Color(0xFF33429F),
       appBar: AppBar(
@@ -72,8 +82,53 @@ class _TelaDespesasState extends State<TelaDespesas> {
       body: Stack(
         //fit: StackFit.expand,
         children: [
-              MonthView(),
-              ListaDepesas(despesaList)
+          TableCalendar(
+            lastDay: DateTime.utc(2030, 10, 26),
+            focusedDay: dataAtual,
+            firstDay: DateTime.utc(2020, 10, 26),
+            locale: 'pt_BR',
+            headerStyle: HeaderStyle(
+              formatButtonShowsNext: false,
+              formatButtonVisible: false,
+              titleCentered: true,
+              titleTextStyle: TextStyle(color: Colors.white,fontFamily: 'Raleway',
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.0,
+                  fontSize: 20.0,
+                  ),
+              leftChevronIcon: Icon(Icons.arrow_back_ios,color: Colors.white,),
+              rightChevronIcon: Icon(Icons.arrow_forward_ios,color: Colors.white,),
+            ),
+            calendarStyle: CalendarStyle(outsideDaysVisible: false,),
+            daysOfWeekStyle: DaysOfWeekStyle(
+              weekdayStyle: TextStyle(color: Colors.transparent),
+              weekendStyle: TextStyle(color: Colors.transparent),
+            ),
+            rowHeight: 0,
+            calendarFormat: CalendarFormat.month,
+            onPageChanged: (dateFirst){
+              setState(() {
+                print(dateFirst);
+                dataAtual = dateFirst;
+                dataFormatada = formatterCalendar.format(dateFirst);
+                _allDespMes(dataFormatada!);
+                print("DATA FORMATADA CALENDAR $dataFormatada");
+              });
+            },
+            onFormatChanged: (format){
+
+            },
+            onDaySelected: (dateFirst, dateLast){
+              setState(() {
+                print(dateFirst);
+                dataFormatada = formatterCalendar.format(dateFirst);
+                _allDespMes(dataFormatada!);
+
+                print("DATA FORMATADA CALENDAR $dataFormatada");
+              });
+            },
+          ),
+              ListaDepesas(despesa,saldoAtual)
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -83,26 +138,59 @@ class _TelaDespesasState extends State<TelaDespesas> {
           Icons.add,
         ),
         onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => AddDespesas(despesaList)));
+          showAddDespesaPage();
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
-  Future<File> _getFile() async {
-    final directory = await getApplicationDocumentsDirectory();
-    return File("${directory.path}/data.json");
+  void showAddDespesaPage() async {
+    final recDesp = await Navigator.push(context, MaterialPageRoute(builder: (context) => AddDespesas()));
+    if(recDesp != null){
+      await helper.saveDespesa(recDesp);
+      _getAllDespesas();
+    }
   }
 
-  Future<String> _readData() async {
-    try {
-      final file = await _getFile();
-      return file.readAsString();
-    } catch (e) {
-      return "algo deu errado!";
-    }
+  void _getAllDespesas(){
+    helper.getAllDespesas().then((list){
+      print(list);
+      setState(() {
+        despesa = list as List<Despesa>;
+      });
+    });
+  }
+
+  String format(double n) {
+    return n.toStringAsFixed(n.truncateToDouble() == n ? 0 : 2);
+  }
+
+  _allDespMes(String data) {
+    helper.getDespesasPorMes(data).then((list) {
+      if (list.isNotEmpty) {
+        setState(() {
+          despesa = list as List<Despesa>;
+          total =
+              despesa.map((item) {
+                double correctValue = double.parse(item.value);
+                return correctValue;
+              }).reduce((a, b) => a + b);
+          saldoAtual = total.toString();
+          print(list);
+        });
+      } else {
+        setState(() {
+          despesa.clear();
+          total = 0;
+          saldoAtual = total.toString();
+          print(list);
+        });
+      }
+
+      //print("TOTAL: $total");
+      //print("All MovMES: $listmovimentacoes");
+    });
   }
 
 }

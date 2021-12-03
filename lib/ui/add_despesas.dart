@@ -1,57 +1,38 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'dart:io';
-import 'package:path_provider/path_provider.dart';
-import 'package:mymoney_test_1/ui/add_despesas_top.dart';
 import 'package:mymoney_test_1/ui/tela_despesas.dart';
+import 'package:mymoney_test_1/helpers/despesas_helper.dart';
 
 class AddDespesas extends StatefulWidget {
-
-  late final List despesaList;
-
-  AddDespesas(this.despesaList);
-
   @override
   _AddDespesasState createState() => _AddDespesasState();
 }
 
 class _AddDespesasState extends State<AddDespesas> {
+
+  DespesaHelper helper = DespesaHelper();
+
   final _addValorDespesaController = TextEditingController();
   final _addDataDespesaController = TextEditingController();
   final _addCategoriaDespesaController = TextEditingController();
   final _addDescricaoDespesaController = TextEditingController();
+  final nameFocus = FocusNode();
+  var valueController;
 
+  Despesa d = Despesa();
 
-
-  @override
-  void initState() {
-    super.initState();
-    _readData().then((data) {
-      setState(() {
-        widget.despesaList = json.decode(data);
-      });
-    });
-  }
-
-  void _addDespesa() {
-    setState(() {
-      Map<String, dynamic> newDespesa = Map();
-      newDespesa["value"] = _addValorDespesaController.text;
-      newDespesa["subtitle"] = _addDataDespesaController.text;
-      newDespesa["category"] = _addCategoriaDespesaController.text;
-      newDespesa["title"] = _addDescricaoDespesaController.text;
-      _addValorDespesaController.text = '';
-      _addDataDespesaController.text = '';
-      _addCategoriaDespesaController.text = '';
-      _addDescricaoDespesaController.text = '';
-      widget.despesaList.add(newDespesa);
-
-      _saveData();
-    });
+  isValueNull(){
+    if(valueController == null){
+      return valueController = "R\$ 0.00";
+    } else {
+      return valueController;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+
+    valueController = _addValorDespesaController;
+
     return Scaffold(
       backgroundColor: Color(0xFF33429F),
       appBar: AppBar(
@@ -81,7 +62,30 @@ class _AddDespesasState extends State<AddDespesas> {
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(children: [
-          AddDespesasTop(),
+          Container(
+              height: MediaQuery.of(context).size.height*0.20,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                      padding: EdgeInsets.only(left: 20.0,top: 18.0,bottom: 20.0),
+                      alignment: Alignment.centerLeft,
+                      child: TextField(
+                        readOnly: true,
+                        controller: isValueNull(),
+                        style: TextStyle(color: Colors.white, fontSize: 25.0),
+                        decoration: InputDecoration(
+                          labelText: "R\$",
+                          labelStyle: TextStyle(color: Colors.white,fontSize: 25.0,fontWeight: FontWeight.bold),
+                          border: InputBorder.none,
+                          disabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none
+                        ),
+                      )
+                  ),
+                ],
+              )),
           Container(
             height: MediaQuery.of(context).size.height * 0.68,
             width: MediaQuery.of(context).size.width,
@@ -129,6 +133,11 @@ class _AddDespesasState extends State<AddDespesas> {
                     ),
                     //textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.deepPurple, fontSize: 25.0),
+                    onChanged: (text){
+                      d.value=text;
+                      double correctValue = double.parse(d.value);
+                      d.value = correctValue;
+                    },
                   ),
                 ),
                 Divider(
@@ -166,6 +175,9 @@ class _AddDespesasState extends State<AddDespesas> {
                     ),
                     //textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.deepPurple, fontSize: 25.0),
+                    onChanged: (text){
+                      d.subtitle=text;
+                    },
                   ),
                 ),
                 Divider(
@@ -217,6 +229,7 @@ class _AddDespesasState extends State<AddDespesas> {
                   child: TextFormField(
                     controller: _addDescricaoDespesaController,
                     keyboardType: TextInputType.name,
+                    focusNode: nameFocus,
                     decoration: InputDecoration(
                       icon: Icon(
                         Icons.chat,
@@ -240,6 +253,9 @@ class _AddDespesasState extends State<AddDespesas> {
                     ),
                     //textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.deepPurple, fontSize: 25.0),
+                    onChanged: (text){
+                      d.title=text;
+                    },
                   ),
                 ),
                 Divider(
@@ -261,30 +277,14 @@ class _AddDespesasState extends State<AddDespesas> {
           Icons.check,
         ),
         onPressed: () {
-          _addDespesa();
+          if(d.title != null && d.title!.isNotEmpty){
+            Navigator.pop(context, d);
+          } else {
+            FocusScope.of(context).requestFocus(nameFocus);
+          }
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
-  }
-  
-  Future<File> _getFile() async {
-    final directory = await getApplicationDocumentsDirectory();
-    return File("${directory.path}/data.json");
-  }
-
-  Future<File> _saveData() async {
-    String data = json.encode(widget.despesaList);
-    final file = await _getFile();
-    return file.writeAsString(data);
-  }
-
-  Future<String> _readData() async {
-    try {
-      final file = await _getFile();
-      return file.readAsString();
-    } catch (e) {
-      return "algo deu errado!";
-    }
   }
 }

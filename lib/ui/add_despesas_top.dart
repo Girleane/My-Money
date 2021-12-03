@@ -13,7 +13,7 @@ class AddDespesasTop extends StatelessWidget {
             Container(
                 padding: EdgeInsets.only(left: 20.0,top: 18.0,bottom: 20.0),
                 alignment: Alignment.centerLeft,
-                child: Text("R\$ 300,00",style: TextStyle(fontSize: 30,color: Colors.white,fontWeight: FontWeight.bold),)
+                child: Text("R\$ 0,00",style: TextStyle(fontSize: 30,color: Colors.white,fontWeight: FontWeight.bold),)
             ),
           ],
         ));

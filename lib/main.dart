@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mymoney_test_1/ui/tela_despesas.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 
-void main() => runApp(DespesasPage());
+void main(){
+  initializeDateFormatting().then((_) => runApp(DespesasPage()));
+}
+
 
 
 class DespesasPage extends StatefulWidget {
