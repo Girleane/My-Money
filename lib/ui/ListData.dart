@@ -11,6 +11,7 @@ class ListData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: (){},
       child: Container(
         height: 70,
         width: MediaQuery.of(context).size.width*0.1,

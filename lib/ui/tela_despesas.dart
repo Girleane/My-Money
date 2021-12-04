@@ -149,18 +149,18 @@ class _TelaDespesasState extends State<TelaDespesas> {
     final recDesp = await Navigator.push(context, MaterialPageRoute(builder: (context) => AddDespesas()));
     if(recDesp != null){
       await helper.saveDespesa(recDesp);
-      _getAllDespesas();
+      _allDespMes(formatterCalendar.format(dataAtual));
     }
   }
 
-  void _getAllDespesas(){
+/*  void _getAllDespesas(){
     helper.getAllDespesas().then((list){
       print(list);
       setState(() {
         despesa = list as List<Despesa>;
       });
     });
-  }
+  }*/
 
   String format(double n) {
     return n.toStringAsFixed(n.truncateToDouble() == n ? 0 : 2);
