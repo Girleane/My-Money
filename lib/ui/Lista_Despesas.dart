@@ -1,11 +1,7 @@
-//import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mymoney_test_1/helpers/despesas_helper.dart';
-//import 'package:mymoney_test_1/ui/ListData.dart';
 import 'package:mymoney_test_1/ui/total_despesas.dart';
-//import 'package:mymoney_test_1/ui/add_despesas.dart';
 
 class ListaDepesas extends StatefulWidget {
 
