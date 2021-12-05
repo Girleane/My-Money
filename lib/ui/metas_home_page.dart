@@ -126,7 +126,7 @@ class _MetasHomePageState extends State<MetasHomePage> {
         ));
   }
 
-  /* Essa função define se será mostrada a tela inicial(default), os cards de
+  /* Esse método define se será mostrada a tela inicial(default), os cards de
   * metas ativas, cards de metas concluidas ou todos o cars de metas. */
   Widget _decideMainPage() {
     if(metas.length > 0 && isSelected[0] == true) {
