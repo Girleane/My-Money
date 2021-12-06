@@ -40,45 +40,6 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
         ),
     );
-    /*DecoratedBox(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: FractionalOffset.topCenter,
-          end: FractionalOffset.bottomCenter,
-          colors: [
-            Colors.blueMoney.withOpacity(0.0),
-            Colors.pinkMoney.withOpacity(0.8),
-          ],
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            height: 300,
-            width: 300,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: AssetImage("images/myMoney.png"),
-                fit: BoxFit.fill,
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(40),
-            child: Text(
-              'Gestão simplificada de suas finanças!',
-              style: TextStyle(
-                  fontSize: 50.0,
-                  color: Colors.white,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );*/
   }
 
   @override
