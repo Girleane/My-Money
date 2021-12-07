@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:meta_old_sdk/helpers/meta_helper.dart';
+import 'package:meta_old_sdk/ui/fake_home_page.dart';
 import 'package:meta_old_sdk/ui/metas_add_page.dart';
 import 'package:meta_old_sdk/ui/_metas_add_money.dart';
 
@@ -12,7 +13,6 @@ class MetasHomePage extends StatefulWidget {
 }
 
 class _MetasHomePageState extends State<MetasHomePage> {
-
   final List<bool> isSelected = [true, false, false];
   bool isSwitched = false;
 
@@ -39,17 +39,7 @@ class _MetasHomePageState extends State<MetasHomePage> {
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute<void>(
                     builder: (BuildContext context) {
-                      return Scaffold(
-                        appBar: AppBar(
-                          title: Text('Menu Principal'),
-                        ),
-                        body: Center(
-                          child: Text(
-                            'This is the main page',
-                            style: TextStyle(fontSize: 24),
-                          ),
-                        ),
-                      );
+                      return FakeHomePage();
                     },
                   ));
                 },
@@ -114,7 +104,7 @@ class _MetasHomePageState extends State<MetasHomePage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(1.0,1.0,1.0,1.0),
+                padding: EdgeInsets.fromLTRB(1.0, 1.0, 1.0, 1.0),
                 child: Container(
                   height: 540,
                   width: 500,
@@ -129,56 +119,58 @@ class _MetasHomePageState extends State<MetasHomePage> {
   /* Esse método define se será mostrada a tela inicial(default), os cards de
   * metas ativas, cards de metas concluidas ou todos o cars de metas. */
   Widget _decideMainPage() {
-    if(metas.length > 0 && isSelected[0] == true) {
+    if (metas.length > 0 && isSelected[0] == true) {
       return _listViewMetas();
-    }else if (_notFinishedLength() > 0 && isSelected[1] == true) {
+    } else if (_notFinishedLength() > 0 && isSelected[1] == true) {
       _orderListNotFinished();
       return _listViewMetasNotFinished();
-    }else if(_finishedLength() > 0 && isSelected[2] == true){
+    } else if (_finishedLength() > 0 && isSelected[2] == true) {
       _orderListFinished();
       return _listViewMetasFinished();
-    }else{
+    } else {
       return _defaultPage();
     }
   }
 
   /* Essa é a tela padrão, onde aparece a logo da empresa e mensagem de
   * instrução para criar as mestas. */
-  Widget _defaultPage(){
-    return Padding(
-      padding: EdgeInsets.fromLTRB(60.0, 50.0, 60.0, 50.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Container(
-            width: 200.0,
-            height: 200.0,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: AssetImage("images/myMoney.png"),
-                fit: BoxFit.cover,
+  Widget _defaultPage() {
+    return Expanded(
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(60.0, 50.0, 60.0, 50.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(
+              width: 200.0,
+              height: 200.0,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: AssetImage("images/myMoney.png"),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          Text(
-            "Crie suas metas aqui!",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 28.0,
-              fontFamily: 'lilitaOne',
+            Text(
+              "Crie suas metas aqui!",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 28.0,
+                fontFamily: 'lilitaOne',
+              ),
             ),
-          ),
-          Text(
-            "Estabeleça valores para suas metas e acompnahe sua evolução!",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18.0,
+            Text(
+              "Estabeleça valores para suas metas e acompnahe sua evolução!",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18.0,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -244,14 +236,13 @@ class _MetasHomePageState extends State<MetasHomePage> {
       child: Padding(
         padding: EdgeInsets.only(bottom: 15.0),
         child: Card(
-          shape:
-          RoundedRectangleBorder(
+          shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(5.0),
-                  topLeft: Radius.circular(5.0),
-                  bottomLeft: Radius.circular(5.0),
-                  bottomRight: Radius.circular(5.0),)
-          ),
+            topRight: Radius.circular(5.0),
+            topLeft: Radius.circular(5.0),
+            bottomLeft: Radius.circular(5.0),
+            bottomRight: Radius.circular(5.0),
+          )),
           color: Colors.iceMoney,
           elevation: 10.0,
           shadowColor: Colors.black,
@@ -278,9 +269,8 @@ class _MetasHomePageState extends State<MetasHomePage> {
                     ),
                     PopupMenuButton(
                       child: Padding(
-                        padding: EdgeInsets.fromLTRB(
-                            0.0, 0, 0, 0),
-                        child:Icon(
+                        padding: EdgeInsets.fromLTRB(0.0, 0, 0, 0),
+                        child: Icon(
                           Icons.more_vert,
                           color: Colors.black,
                           size: 30.0,
@@ -289,19 +279,16 @@ class _MetasHomePageState extends State<MetasHomePage> {
                       color: Colors.iceMoney,
                       elevation: 20,
                       shape: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Colors.pinkMoney,
-                              width: 2
-                          )
-                      ),
+                          borderSide:
+                              BorderSide(color: Colors.pinkMoney, width: 2)),
                       itemBuilder: (context) => [
                         PopupMenuItem(
                           child: Text("Adicinoar Dinheiro"),
                           value: 1,
                         ),
                       ],
-                      onSelected: (result){
-                        if (result == 1){
+                      onSelected: (result) {
+                        if (result == 1) {
                           _showMetasAddMoney(meta: metas[index]);
                         }
                       },
@@ -341,7 +328,8 @@ class _MetasHomePageState extends State<MetasHomePage> {
                               alignment: Alignment.centerLeft,
                             ),
                             Padding(
-                              padding: EdgeInsets.fromLTRB(150.0, 0.0, 1.0,0.0),
+                              padding:
+                                  EdgeInsets.fromLTRB(150.0, 0.0, 1.0, 0.0),
                               child: Text(
                                 _percente(index),
                                 style: TextStyle(fontSize: 14.0),
@@ -362,27 +350,26 @@ class _MetasHomePageState extends State<MetasHomePage> {
                     children: [
                       Text("R\$",
                           style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold)),
+                              fontSize: 18.0, fontWeight: FontWeight.bold)),
                       Expanded(
                         child: Text(metas[index].valorInicial ?? "",
                             overflow: TextOverflow.fade,
                             maxLines: 1,
                             softWrap: false,
                             style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold)),
+                                fontSize: 18.0, fontWeight: FontWeight.bold)),
                       ),
                       Padding(
                         padding: EdgeInsets.fromLTRB(110.0, 0.0, 0.0, 0.0),
                       ),
                       Text("/R\$", style: TextStyle(fontSize: 18.0)),
                       Expanded(
-                        child: Text(metas[index].valorMeta ?? "",
-                            overflow: TextOverflow.fade,
-                            maxLines: 1,
-                            softWrap: false,
-                            style: TextStyle(fontSize: 18.0),
+                        child: Text(
+                          metas[index].valorMeta ?? "",
+                          overflow: TextOverflow.fade,
+                          maxLines: 1,
+                          softWrap: false,
+                          style: TextStyle(fontSize: 18.0),
                         ),
                       ),
                     ],
@@ -430,10 +417,10 @@ class _MetasHomePageState extends State<MetasHomePage> {
 
   /* Me retorna o numero de itens a serem mostrados na lista de metas
   * ainda não finalizadas*/
-  int _notFinishedLength(){
+  int _notFinishedLength() {
     int count = 0;
-    for (int i = 0; i < metas.length; i++){
-      if(metas[i].done == "NotOk"){
+    for (int i = 0; i < metas.length; i++) {
+      if (metas[i].done == "NotOk") {
         count++;
       }
     }
@@ -446,15 +433,15 @@ class _MetasHomePageState extends State<MetasHomePage> {
         padding: EdgeInsets.all(10.0),
         itemCount: _finishedLength(),
         itemBuilder: (context, index) {
-          return _metaCard(context,index);
+          return _metaCard(context, index);
         });
   }
 
   /* Me retorna o numero de itens a serem mostrados na lista de metas finalizadas*/
-  int _finishedLength(){
+  int _finishedLength() {
     int count = 0;
-    for (int i = 0; i < metas.length; i++){
-      if(metas[i].done == "ok"){
+    for (int i = 0; i < metas.length; i++) {
+      if (metas[i].done == "ok") {
         count++;
       }
     }
@@ -581,20 +568,22 @@ class _MetasHomePageState extends State<MetasHomePage> {
   }
 
   /* Retorna um valor em % para avaliar a progressão da meta*/
-  String _percente(int index){
-    double percente = (double.parse(metas[index].valorInicial.toString()) / double.parse(metas[index].valorMeta.toString()))*100;
+  String _percente(int index) {
+    double percente = (double.parse(metas[index].valorInicial.toString()) /
+            double.parse(metas[index].valorMeta.toString())) *
+        100;
     if (percente <= 999.0) {
       return percente.toStringAsFixed(1) + "% ";
-    }else{
-      return (percente/1000).toStringAsFixed(1) + "k% ";
+    } else {
+      return (percente / 1000).toStringAsFixed(1) + "k% ";
     }
   }
 
   /* Retorna o número de dias que faltam para a data de conclusão da meta*/
-  String _toGo(int index){
+  String _toGo(int index) {
     DateTime today = DateTime.now();
 
-    List <String> data = metas[index].previsao!.split('/');
+    List<String> data = metas[index].previsao!.split('/');
     int a = int.parse(data[0]);
     int b = int.parse(data[1]);
     int c = int.parse(data[2]);
@@ -608,11 +597,13 @@ class _MetasHomePageState extends State<MetasHomePage> {
 
   /* Retorna um valor a ser utilizado para "prencher a barra de progresso
   * da meta" para avaliar sua progressão*/
-  double _progress(int index){
-    double percente = (double.parse(metas[index].valorInicial.toString()) / double.parse(metas[index].valorMeta.toString())) * 200;
-    if(percente <= 200.0) {
+  double _progress(int index) {
+    double percente = (double.parse(metas[index].valorInicial.toString()) /
+            double.parse(metas[index].valorMeta.toString())) *
+        200;
+    if (percente <= 200.0) {
       return percente;
-    }else{
+    } else {
       return 200.0;
     }
   }

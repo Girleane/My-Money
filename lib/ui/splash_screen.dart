@@ -16,14 +16,10 @@ class _SplashScreenState extends State<SplashScreen> {
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
             stops: [
-              0.1,
-              0.3,
-              0.6,
+              0.2,
               0.9,
             ],
             colors: [
-              Colors.blueMoney,
-              Colors.pinkMoney,
               Colors.blueMoney,
               Colors.pinkMoney,
             ],
@@ -33,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
+            /*Container(
               width: 300.0,
               height: 300.0,
               decoration: BoxDecoration(
@@ -51,19 +47,40 @@ class _SplashScreenState extends State<SplashScreen> {
                     )
                   ]
               ),
-            ),
+            ),*/
             Padding(
               padding: EdgeInsets.only(top: 50),
-              child: Text(
-                "Gestão simplificada de suas finanças!",
-                style: TextStyle(
-                  decoration: TextDecoration.none,
-                  color: Colors.white.withOpacity(0.8),
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.normal,
-                  fontFamily: 'lilitaOne',
-                ),
-                textAlign: TextAlign.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "MY M",
+                    style: TextStyle(
+                      decoration: TextDecoration.none,
+                      color: Colors.white.withOpacity(0.8),
+                      fontSize: 45.0,
+                      fontWeight: FontWeight.normal,
+                      fontFamily: 'lilitaOne',
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  Icon(
+                    Icons.monetization_on_rounded,
+                    color: Colors.white,
+                    size: 45,
+                  ),
+                  Text(
+                    "NEY",
+                    style: TextStyle(
+                      decoration: TextDecoration.none,
+                      color: Colors.white.withOpacity(0.8),
+                      fontSize: 45.0,
+                      fontWeight: FontWeight.normal,
+                      fontFamily: 'lilitaOne',
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
             ),
           ],
@@ -75,7 +92,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 150)).then((_) {
+    Future.delayed(Duration(seconds: 3)).then((_) {
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => FakeHomePage()));
     });
