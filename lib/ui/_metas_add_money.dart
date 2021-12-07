@@ -3,7 +3,7 @@ import 'package:meta_old_sdk/helpers/meta_helper.dart';
 import 'package:meta_old_sdk/ui/metas_home_page.dart';
 
 class MetasAddMoney extends StatefulWidget {
-  final Meta meta;
+  final Meta? meta;
 
   MetasAddMoney({this.meta});
 
@@ -13,7 +13,7 @@ class MetasAddMoney extends StatefulWidget {
 
 class _MetaAddMoneyState extends State<MetasAddMoney> {
   bool _metaEdited = false;
-  Meta _editedMeta;
+  Meta? _editedMeta;
 
   /*Controladores de texto utilizados para editar e
   * resetar compos de texto*/
@@ -39,11 +39,11 @@ class _MetaAddMoneyState extends State<MetasAddMoney> {
     if (widget.meta == null) {
       _editedMeta = Meta();
     } else {
-      _editedMeta = Meta.fromMap(widget.meta.toMap());
-      _editedMeta = Meta.fromMap(widget.meta.toMap());
-      _valorMetaController.text = _editedMeta.valorMeta;
-      _valorInicialController.text = _editedMeta.valorInicial;
-      _doneController.text = _editedMeta.done;
+      _editedMeta = Meta.fromMap(widget.meta!.toMap());
+      _editedMeta = Meta.fromMap(widget.meta!.toMap());
+      _valorMetaController.text = _editedMeta!.valorMeta!;
+      _valorInicialController.text = _editedMeta!.valorInicial!;
+      _doneController.text = _editedMeta!.done!;
     }
   }
 
@@ -79,7 +79,7 @@ class _MetaAddMoneyState extends State<MetasAddMoney> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          if (_editedMeta.name != null && _editedMeta.valorInicial.isNotEmpty) {
+          if (_editedMeta!.name != null && _editedMeta!.valorInicial != null) {
             Navigator.pop(context, _editedMeta);
           } else {
             FocusScope.of(context).requestFocus(_valorInicialFocus);
@@ -131,10 +131,10 @@ class _MetaAddMoneyState extends State<MetasAddMoney> {
                           focusNode: _valorInicialFocus,
                           onChanged: (text) {
                             _metaEdited = true;
-                            double init = double.parse(widget.meta.valorInicial);
+                            double init = double.parse(widget.meta!.valorInicial!);
                             double total = init + double.parse(text);
                             setState(() {
-                              _editedMeta.valorInicial =  total.toStringAsFixed(0);
+                              _editedMeta!.valorInicial =  total.toStringAsFixed(0);
                               _metaFinished();
                             });
                           },
@@ -178,13 +178,13 @@ class _MetaAddMoneyState extends State<MetasAddMoney> {
   /* Atribui uma "etiqueta/label" a meta no banco de dados definido-a como
   * concluida ou não concluida*/
   String _metaFinished(){
-    if(double.parse(_editedMeta.valorInicial) >= double.parse(widget.meta.valorMeta)) {
-      _editedMeta.done = "ok";
+    if(double.parse(_editedMeta!.valorInicial!) >= double.parse(widget.meta!.valorMeta!)) {
+      _editedMeta!.done = "ok";
     }
     else{
-      _editedMeta.done = "NotOk";
+      _editedMeta!.done = "NotOk";
     }
-    return _editedMeta.done;
+    return _editedMeta!.done!;
   }
 
 }

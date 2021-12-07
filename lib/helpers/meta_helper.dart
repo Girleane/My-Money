@@ -19,9 +19,9 @@ class MetaHelper {
 
   MetaHelper.internal();
 
-  Database _db;
+  Database? _db;
 
-  Future<Database> get db async {
+  Future<Database?> get db async {
     if (_db != null) {
       return _db;
     } else {
@@ -43,14 +43,14 @@ class MetaHelper {
   }
 
   Future<Meta> saveMeta(Meta meta) async {
-    Database dbMeta = await db;
-    meta.id = await dbMeta.insert(metaTable, meta.toMap());
+    Database? dbMeta = await db;
+    meta.id = await dbMeta!.insert(metaTable, meta.toMap());
     return meta;
   }
 
-  Future<Meta> getMeta(int id) async {
-    Database dbMeta = await db;
-    List<Map> maps = await dbMeta.query(metaTable,
+  Future<Meta?> getMeta(int id) async {
+    Database? dbMeta = await db;
+    List<Map> maps = await dbMeta!.query(metaTable,
         columns: [
           idColumn,
           valorInicialColumn,
@@ -71,20 +71,20 @@ class MetaHelper {
   }
 
   Future<int> deleteMeta(int id) async {
-    Database dbMeta = await db;
-    return await dbMeta
+    Database? dbMeta = await db;
+    return await dbMeta!
         .delete(metaTable, where: "$idColumn = ?", whereArgs: [id]);
   }
 
   Future<int> updateMeta(Meta meta) async {
-    Database dbMeta = await db;
-    return await dbMeta.update(metaTable, meta.toMap(),
+    Database? dbMeta = await db;
+    return await dbMeta!.update(metaTable, meta.toMap(),
         where: "$idColumn = ?", whereArgs: [meta.id]);
   }
 
   Future<List> getAllMetas() async {
-    Database dbMeta = await db;
-    List listMap = await dbMeta.rawQuery("SELECT * FROM $metaTable");
+    Database? dbMeta = await db;
+    List listMap = await dbMeta!.rawQuery("SELECT * FROM $metaTable");
     List<Meta> listMeta = [];
     for (Map m in listMap) {
       listMeta.add(Meta.fromMap(m));
@@ -92,28 +92,28 @@ class MetaHelper {
     return listMeta;
   }
 
-  Future<int> getNumber() async {
-    Database dbMeta = await db;
+  Future<int?> getNumber() async {
+    Database? dbMeta = await db;
     return Sqflite.firstIntValue(
-        await dbMeta.rawQuery("SELECT COUNT(*) FROM $metaTable"));
+        await dbMeta!.rawQuery("SELECT COUNT(*) FROM $metaTable"));
   }
 
   Future close() async {
-    Database dbMeta = await db;
-    dbMeta.close();
+    Database? dbMeta = await db;
+    dbMeta!.close();
   }
 }
 
 class Meta {
-  int id;
-  String name;
-  String valorInicial;
-  String valorMeta;
-  String previsao;
-  String descricao;
-  String img;
+  int? id;
+  String? name;
+  String? valorInicial;
+  String? valorMeta;
+  String? previsao;
+  String? descricao;
+  String? img;
 
-  String done;
+  String? done;
 
   Meta();
 

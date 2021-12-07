@@ -491,7 +491,7 @@ class _MetasHomePageState extends State<MetasHomePage> {
                           padding: EdgeInsets.all(10.0),
                           child: TextButton(
                             onPressed: () {
-                              helper.deleteMeta(metas[index].id);
+                              helper.deleteMeta(metas[index].id!);
                               setState(() {
                                 metas.removeAt(index);
                                 Navigator.pop(context);
@@ -511,7 +511,7 @@ class _MetasHomePageState extends State<MetasHomePage> {
   }
 
   /* Navigator usado para ir até a página de adicionar metas*/
-  void _showMetasPage({Meta meta}) async {
+  void _showMetasPage({Meta? meta}) async {
     final recMeta = await Navigator.push(context,
         MaterialPageRoute(builder: (context) => MetasAddPage(meta: meta)));
     if (recMeta != null) {
@@ -525,7 +525,7 @@ class _MetasHomePageState extends State<MetasHomePage> {
   }
 
   /* Navigator usado para ir até a página de adicionar dinheiro a uma meta*/
-  void _showMetasAddMoney({Meta meta}) async {
+  void _showMetasAddMoney({Meta? meta}) async {
     final recMeta = await Navigator.push(context,
         MaterialPageRoute(builder: (context) => MetasAddMoney(meta: meta)));
     if (recMeta != null) {
@@ -542,7 +542,7 @@ class _MetasHomePageState extends State<MetasHomePage> {
   void _getAllMetas() {
     helper.getAllMetas().then((list) {
       setState(() {
-        metas = list;
+        metas = list as List<Meta>;
       });
     });
   }
@@ -552,12 +552,12 @@ class _MetasHomePageState extends State<MetasHomePage> {
     switch (result) {
       case OrderOptions.orderaz:
         metas.sort((a, b) {
-          return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+          return a.name!.toLowerCase().compareTo(b.name!.toLowerCase());
         });
         break;
       case OrderOptions.orderza:
         metas.sort((a, b) {
-          return b.name.toLowerCase().compareTo(a.name.toLowerCase());
+          return b.name!.toLowerCase().compareTo(a.name!.toLowerCase());
         });
         break;
     }
@@ -565,17 +565,17 @@ class _MetasHomePageState extends State<MetasHomePage> {
   }
 
   /* Ordena as metas de finalizadas para não finalizadas*/
-  Widget _orderListFinished() {
+  Widget? _orderListFinished() {
     metas.sort((a, b) {
-      return b.done.toLowerCase().compareTo(a.done.toLowerCase());
+      return b.done!.toLowerCase().compareTo(a.done!.toLowerCase());
     });
     setState(() {});
   }
 
   /* Ordena as metas de não finalizadas para finalizadas*/
-  Widget _orderListNotFinished() {
+  Widget? _orderListNotFinished() {
     metas.sort((a, b) {
-      return a.done.toLowerCase().compareTo(b.done.toLowerCase());
+      return a.done!.toLowerCase().compareTo(b.done!.toLowerCase());
     });
     setState(() {});
   }
@@ -594,7 +594,7 @@ class _MetasHomePageState extends State<MetasHomePage> {
   String _toGo(int index){
     DateTime today = DateTime.now();
 
-    List <String> data = metas[index].previsao.split('/');
+    List <String> data = metas[index].previsao!.split('/');
     int a = int.parse(data[0]);
     int b = int.parse(data[1]);
     int c = int.parse(data[2]);

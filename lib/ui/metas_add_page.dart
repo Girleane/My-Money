@@ -3,7 +3,7 @@ import 'package:meta_old_sdk/helpers/meta_helper.dart';
 import 'package:meta_old_sdk/ui/metas_home_page.dart';
 
 class MetasAddPage extends StatefulWidget {
-  final Meta meta;
+  final Meta? meta;
 
   MetasAddPage({this.meta});
 
@@ -13,7 +13,7 @@ class MetasAddPage extends StatefulWidget {
 
 class _MetasAddPageState extends State<MetasAddPage> {
   bool _metaEdited = false;
-  Meta _editedMeta;
+  Meta? _editedMeta;
 
   /*Controladores de texto utilizados para editar e
   * resetar compos de texto*/
@@ -49,14 +49,14 @@ class _MetasAddPageState extends State<MetasAddPage> {
     if (widget.meta == null) {
       _editedMeta = Meta();
     } else {
-      _editedMeta = Meta.fromMap(widget.meta.toMap());
-      _editedMeta = Meta.fromMap(widget.meta.toMap());
-      _valorMetaController.text = _editedMeta.valorMeta;
-      _valorInicialController.text = _editedMeta.valorInicial;
-      _previsaoController.text = _editedMeta.previsao;
-      _nomeController.text = _editedMeta.name;
-      _descricaoController.text = _editedMeta.descricao;
-      _doneController.text = _editedMeta.done;
+      _editedMeta = Meta.fromMap(widget.meta!.toMap());
+      _editedMeta = Meta.fromMap(widget.meta!.toMap());
+      _valorMetaController.text = _editedMeta!.valorMeta!;
+      _valorInicialController.text = _editedMeta!.valorInicial!;
+      _previsaoController.text = _editedMeta!.previsao!;
+      _nomeController.text = _editedMeta!.name!;
+      _descricaoController.text = _editedMeta!.descricao!;
+      _doneController.text = _editedMeta!.done!;
     }
   }
 
@@ -83,7 +83,7 @@ class _MetasAddPageState extends State<MetasAddPage> {
                 );
               },
             ),
-            title: Text(_editedMeta.name ?? 'Nova meta'),
+            title: Text(_editedMeta!.name ?? 'Nova meta'),
             actions: <Widget>[
               IconButton(
                 icon: Icon(Icons.refresh),
@@ -94,8 +94,8 @@ class _MetasAddPageState extends State<MetasAddPage> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            if (_editedMeta.name != null && _editedMeta.name.isNotEmpty &&
-                _editedMeta.valorMeta.isNotEmpty && _editedMeta.valorInicial.isNotEmpty) {
+            if (_editedMeta!.name != null && _editedMeta!.name != null &&
+                _editedMeta!.valorMeta != null && _editedMeta!.valorInicial != null) {
               Navigator.pop(context, _editedMeta);
             } else {
               FocusScope.of(context).requestFocus(_nameFocus);
@@ -147,13 +147,13 @@ class _MetasAddPageState extends State<MetasAddPage> {
                           onChanged: (text) {
                             _metaEdited = true;
                             setState(() {
-                              _editedMeta.valorMeta = text;
+                              _editedMeta!.valorMeta = text;
                               _metaFinished();
                             });
                           },
-                          validator: (String value) {
+                          validator: (String? value) {
                             String msg = "";
-                            if (value.isEmpty) {
+                            if (value!.isEmpty) {
                               msg = "Insira um dado!";
                             }
                             return msg;
@@ -191,12 +191,12 @@ class _MetasAddPageState extends State<MetasAddPage> {
                           onChanged: (text) {
                             _metaEdited = true;
                             setState(() {
-                              _editedMeta.valorInicial = text;
+                              _editedMeta!.valorInicial = text;
                               _metaFinished();
                             });
                           },
-                          validator: (String value) {
-                            if (value.isEmpty) {
+                          validator: (String? value) {
+                            if (value!.isEmpty) {
                               return "Insira um dado!";
                             }
                           },
@@ -216,11 +216,11 @@ class _MetasAddPageState extends State<MetasAddPage> {
                           controller: _previsaoController,
                           onChanged: (text) {
                             _metaEdited = true;
-                            _editedMeta.previsao = text;
+                            _editedMeta!.previsao = text;
                             _metaFinished();
                           },
-                          validator: (String value) {
-                            if (value.isEmpty) {
+                          validator: (String? value) {
+                            if (value!.isEmpty) {
                               return "Insira um dado!";
                             }
                           },
@@ -242,12 +242,12 @@ class _MetasAddPageState extends State<MetasAddPage> {
                           onChanged: (text) {
                             _metaEdited = true;
                             setState(() {
-                              _editedMeta.name = text;
+                              _editedMeta!.name = text;
                               _metaFinished();
                             });
                           },
-                          validator: (String value) {
-                            if (value.isEmpty) {
+                          validator: (String? value) {
+                            if (value!.isEmpty) {
                               return "Insira um dado!";
                             }
                           },
@@ -267,11 +267,11 @@ class _MetasAddPageState extends State<MetasAddPage> {
                           controller: _descricaoController,
                           onChanged: (text) {
                             _metaEdited = true;
-                            _editedMeta.descricao = text;
+                            _editedMeta!.descricao = text;
                             _metaFinished();
                           },
-                          validator: (String value) {
-                            if (value.isEmpty) {
+                          validator: (String? value) {
+                            if (value!.isEmpty) {
                               return "Insira um dado!";
                             }
                           },
@@ -319,13 +319,13 @@ class _MetasAddPageState extends State<MetasAddPage> {
   /* Atribui uma "etiqueta/label" a meta no banco de dados definido-a como
   * concluida ou não concluida*/
   String _metaFinished(){
-    if(int.parse(_editedMeta.valorInicial) >= int.parse(_editedMeta.valorMeta)) {
-      _editedMeta.done = "ok";
+    if(int.parse(_editedMeta!.valorInicial!) >= int.parse(_editedMeta!.valorMeta!)) {
+      _editedMeta!.done = "ok";
     }
     else{
-      _editedMeta.done = "NotOk";
+      _editedMeta!.done = "NotOk";
     }
-      return _editedMeta.done;
+      return _editedMeta!.done!;
   }
 
 }

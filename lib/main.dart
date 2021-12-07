@@ -7,7 +7,7 @@ import 'package:meta_old_sdk/ui/splash_screen.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: SplashScreen(),
+    home: MetasHomePage(),
     debugShowCheckedModeBanner: false,
   ));
 }
