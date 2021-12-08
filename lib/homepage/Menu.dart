@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_money_integrated/InicialPage.dart';
+import 'package:my_money_integrated/despesas/tela_despesas.dart';
+import 'package:my_money_integrated/grafico/tela_grafico.dart';
 import 'package:my_money_integrated/metas/MetasHomePage.dart';
 import 'package:my_money_integrated/perfil/MeuPerfil.dart';
+import 'package:my_money_integrated/receitas/tela_receitas.dart';
 import 'package:my_money_integrated/sobre/SobrePage.dart';
 
 class Menu extends StatelessWidget {
@@ -15,12 +18,19 @@ class Menu extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.dashboard_rounded),
             title: Text('Início'),
-            onTap: () => {},
+            onTap: () => {
+              Navigator.pop(context)
+            },
           ),
           ListTile(
             leading: Icon(Icons.assessment),
             title: Text('Gráficos'),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => Grafico()));
+            },
           ),
           ListTile(
               leading: Icon(Icons.check_box_rounded),
@@ -35,12 +45,22 @@ class Menu extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.add_circle),
             title: Text('Receitas'),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => TelaReceitas()));
+            },
           ),
           ListTile(
             leading: Icon(Icons.remove_circle_rounded),
             title: Text('Despesas'),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => TelaDespesas()));
+            },
           ),
           ListTile(
             leading: Icon(Icons.library_books),

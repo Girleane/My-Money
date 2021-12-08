@@ -81,11 +81,7 @@ class _EntrarState extends State<Entrar> {
                       side: BorderSide(color: Colors.pinkMoney)),
                   padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute<void>(
-                      builder: (BuildContext context) {
-                        return Home();
-                      },
-                    ));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
                   },
                   child: Text(
                     "Entrar",
