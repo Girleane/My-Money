@@ -38,6 +38,8 @@ dependencies:
   url_launcher: ^5.0.2
   splashscreen: any
   image_picker: ^0.6.2+3
+  firebase_auth: ^0.20.1
+  firebase_core: ^0.7.0
 
 dev_dependencies:
   flutter_test:
