@@ -39,11 +39,7 @@ class _MetasHomePageState extends State<MetasHomePage> {
               return IconButton(
                 icon: Icon(Icons.arrow_back),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute<void>(
-                    builder: (BuildContext context) {
-                      return Home();
-                    },
-                  ));
+                  Navigator.pop(context);
                 },
                 tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
               );

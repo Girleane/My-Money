@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:my_money_integrated/InicialPage.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
-  runApp(MaterialApp(
+  initializeDateFormatting().then((_) => runApp(MaterialApp(
     home: InicialPage(),
     theme: ThemeData(
-        hintColor: Colors.white,
-        primaryColor: Colors.white,
-        shadowColor: Colors.black,),
-  ));
+      hintColor: Colors.white,
+      primaryColor: Colors.white,
+      shadowColor: Colors.black,),
+  )));
 }
