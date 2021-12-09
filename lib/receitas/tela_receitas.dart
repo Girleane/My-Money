@@ -1,5 +1,6 @@
 import 'package:my_money_integrated/helpers/despesas_helper.dart';
 import 'package:my_money_integrated/grafico/tela_grafico.dart';
+import 'package:my_money_integrated/homepage/Home.dart';
 import 'package:my_money_integrated/receitas/total_receitas.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +48,10 @@ class _TelaReceitasState extends State<TelaReceitas> {
         automaticallyImplyLeading: true,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Home()));
           },
           icon: Icon(
             Icons.arrow_back,
