@@ -57,6 +57,7 @@ class _HomeState extends State<Home> {
         ),
         child: SafeArea(
           child: Drawer(
+            elevation: 5.0,
             child: ListView(
               padding: EdgeInsets.zero,
               children: <Widget>[
