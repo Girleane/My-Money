@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_money_integrated/Entrar.dart';
-import 'package:my_money_integrated/register/Registrar1.dart';
+import 'package:my_money_integrated/acesso/Entrar.dart';
+
+import 'register/Registrar1.dart';
 
 //O metodo build armazena a execução da classe Home
 class InicialPage extends StatefulWidget {

@@ -41,6 +41,7 @@ dependencies:
   intl: ^0.17.0
   syncfusion_flutter_charts: ^19.1.56
   image_picker: ^0.6.2+3
+  path_provider: ^2.0.7
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +78,9 @@ flutter:
   assets:
     - images/my_money.png
     - images/myMoney.png
+    - images/imagem1.png
+    - images/imagem2.png
+    - images/imagem3.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

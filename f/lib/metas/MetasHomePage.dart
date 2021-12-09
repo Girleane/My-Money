@@ -193,7 +193,7 @@ class _MetasHomePageState extends State<MetasHomePage> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.fromLTRB(17.0, 5.0, 15.0, 2.0),
+          padding: EdgeInsets.fromLTRB(17.0, 5.0, 12.0, 2.0),
           child: Text(
             "Alcançadas",
             style: TextStyle(fontSize: 22.0),
@@ -278,13 +278,13 @@ class _MetasHomePageState extends State<MetasHomePage> {
                       elevation: 20,
                       shape: OutlineInputBorder(
                           borderSide: BorderSide(
-                              color: Colors.black12,
+                              color: Colors.pinkMoney,
                               width: 2
                           )
                       ),
                       itemBuilder: (context) => [
                         PopupMenuItem(
-                          child: Text("Adicionar Dinheiro"),
+                          child: Text("Adicinoar Dinheiro"),
                           value: 1,
                         ),
                       ],
