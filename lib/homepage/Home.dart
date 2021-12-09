@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_money_integrated/acesso/InicialPage.dart';
 import 'package:my_money_integrated/despesas/tela_despesas.dart';
-import 'package:my_money_integrated/dicas/Dicas.dart';
+import 'package:my_money_integrated/dicas/DicasPage.dart';
 import 'package:my_money_integrated/grafico/tela_grafico.dart';
 import 'package:my_money_integrated/helpers/despesas_helper.dart';
-import 'package:my_money_integrated/metas/MetasAddMoney.dart';
 import 'package:my_money_integrated/metas/MetasHomePage.dart';
 import 'package:my_money_integrated/metas/helpers/MetasHelpers.dart';
 import 'package:my_money_integrated/perfil/MeuPerfil.dart';
@@ -218,24 +217,21 @@ class _HomeState extends State<Home> {
                     ))
               ],
             ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 20.0,
-                ),
-                Text(
-                  "R\$ ${saldoAtualmov}0",
-                  style: TextStyle(color: Colors.white, fontSize: 20.0),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 20,
+            Visibility(
+              visible: _isVisible,
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 20.0,
+                  ),
+                  Text(
+                    "R\$ ${saldoAtualmov}0",
+                    style: TextStyle(color: Colors.white, fontSize: 20.0),
+                  ),
+                ],
+              ),
             ),
             _mainBody(),
-            SizedBox(
-              height: 40,
-            ),
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
@@ -244,7 +240,279 @@ class _HomeState extends State<Home> {
                 ),
                 color: Colors.iceMoney,
               ),
-              height: MediaQuery.of(context).size.height * 0.40,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.50,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 30.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      TelaReceitas()));
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.40,
+                          height: MediaQuery.of(context).size.height * 0.085,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15.0))),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Icon(
+                                Icons.add_circle,
+                                size: 32,
+                                color: Colors.azulMoney,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                "Receitas",
+                                style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.azulMoney),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 19.0,
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      TelaDespesas()));
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.40,
+                          height: MediaQuery.of(context).size.height * 0.085,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15.0))),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Icon(
+                                Icons.remove_circle_rounded,
+                                size: 32,
+                                color: Colors.azulMoney,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                "Despesas",
+                                style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.azulMoney),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 12.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      MetasHomePage()));
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.40,
+                          height: MediaQuery.of(context).size.height * 0.085,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15.0))),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Icon(
+                                Icons.check_box_rounded,
+                                size: 32,
+                                color: Colors.azulMoney,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                "Metas",
+                                style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.azulMoney),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 19.0,
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      Grafico()));
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.40,
+                          height: MediaQuery.of(context).size.height * 0.085,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15.0))),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Icon(
+                                Icons.assessment,
+                                size: 32,
+                                color: Colors.azulMoney,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                "Gráfico",
+                                style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.azulMoney),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 12.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      DicasPage()));
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.40,
+                          height: MediaQuery.of(context).size.height * 0.085,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15.0))),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Icon(
+                                Icons.library_books,
+                                size: 32,
+                                color: Colors.azulMoney,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                "Dicas",
+                                style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.azulMoney),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 19.0,
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      SobrePage()));
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.40,
+                          height: MediaQuery.of(context).size.height * 0.085,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15.0))),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Icon(
+                                Icons.info_rounded,
+                                size: 32,
+                                color: Colors.azulMoney,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                "Sobre",
+                                style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.azulMoney),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),

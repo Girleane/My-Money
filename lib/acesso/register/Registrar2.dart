@@ -48,7 +48,7 @@ class _Registrar2State extends State<Registrar2> {
             ),
           ),
           Container(
-            height: 500.0,
+            height: 700.0,
             padding: EdgeInsets.fromLTRB(30.0, 50.0, 30.0, 1.0),
             child: Form(
               key: _formKey,
@@ -69,7 +69,7 @@ class _Registrar2State extends State<Registrar2> {
                       enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.white)),
                     )),
-                Divider(height: 30.0),
+                Divider(height: 50.0),
                 ButtonTheme(
                   minWidth: 400.0, //Definindo dimensões do botão
                   height: 50.0,
@@ -101,7 +101,7 @@ class _Registrar2State extends State<Registrar2> {
                   ),
                 ),
                 Divider(
-                  height: 200.0,
+                  height: 250.0,
                 ),
                 Text(
                   "Ao registrar-se você concorda com",

@@ -193,7 +193,7 @@ class _MetasHomePageState extends State<MetasHomePage> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.fromLTRB(17.0, 5.0, 15.0, 2.0),
+          padding: EdgeInsets.fromLTRB(17.0, 5.0, 20.0, 2.0),
           child: Text(
             "Alcançadas",
             style: TextStyle(fontSize: 22.0),

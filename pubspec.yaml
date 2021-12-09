@@ -36,7 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   sqflite: any
   table_calendar: ^3.0.3
-  url_launcher: ^5.0.2
+  url_launcher: any
   splashscreen: any
   intl: ^0.17.0
   syncfusion_flutter_charts: ^19.1.56
@@ -78,7 +78,7 @@ flutter:
   assets:
     - images/my_money.png
     - images/myMoney.png
-    - images/imagem1.png
+    - images/imagem1.jpeg
     - images/imagem2.png
     - images/imagem3.png
 
