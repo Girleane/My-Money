@@ -139,6 +139,6 @@ class Despesa {
 
   @override
   String toString() {
-    return "Despesa:(id:$id,title:$title,subtitle:$subtitle,value:$value, tipo:$tipo)";
+    return "Movimentação:(id:$id,title:$title,subtitle:$subtitle,value:$value, tipo:$tipo)";
   }
 }

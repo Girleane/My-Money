@@ -3,6 +3,7 @@ import 'package:my_money_integrated/despesas/total_despesas.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:my_money_integrated/homepage/Home.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:my_money_integrated/helpers/despesas_helper.dart';
 import 'add_despesas.dart';
@@ -48,7 +49,10 @@ class _TelaDespesasState extends State<TelaDespesas> {
         automaticallyImplyLeading: true,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Home()));
           },
           icon: Icon(
             Icons.arrow_back,

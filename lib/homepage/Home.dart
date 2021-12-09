@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:my_money_integrated/InicialPage.dart';
+import 'package:my_money_integrated/despesas/tela_despesas.dart';
+import 'package:my_money_integrated/grafico/tela_grafico.dart';
+import 'package:my_money_integrated/helpers/despesas_helper.dart';
 import 'package:my_money_integrated/homepage/Menu.dart';
 import 'package:my_money_integrated/metas/MetasAddMoney.dart';
+import 'package:my_money_integrated/metas/MetasHomePage.dart';
 import 'package:my_money_integrated/metas/helpers/MetasHelpers.dart';
+import 'package:my_money_integrated/perfil/MeuPerfil.dart';
+import 'package:my_money_integrated/receitas/tela_receitas.dart';
+import 'package:my_money_integrated/sobre/SobrePage.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -12,21 +19,31 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  bool _isIncome = false;
   bool _isVisible = false;
   String? SaldoTotalMeta;
+  double total = 0.0;
+  String? saldoAtualmov;
+  double despSum = 0.0;
+  double recSum = 0.0;
+  double testeR = 0.0;
+  double testeD = 0.0;
+  int progRec = 0;
+  int progDesp = 0;
 
   static const Color _primaryColor = Colors.deepPurpleAccent;
   static const Color _secondaryColor = Colors.deepOrangeAccent;
   var constante = 1;
   double totalMeta = 0.0;
   List<Meta> metas = [];
+  List<Despesa> mov = [];
   MetaHelper helper = MetaHelper();
+  DespesaHelper helperMov = DespesaHelper();
 
   @override
   void initState() {
     super.initState();
     _getAllMetas();
+    _getAllMov();
   }
 
   @override
@@ -38,7 +55,120 @@ class _HomeState extends State<Home> {
               Colors.iceMoney, //This will change the drawer background to blue.
           //other styles
         ),
-        child: Menu(),
+        child: SafeArea(
+          child: Drawer(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: <Widget>[
+                ListTile(
+                  leading: Icon(Icons.dashboard_rounded),
+                  title: Text('Início'),
+                  onTap: () => {
+                    Navigator.pop(context),
+                    _getAllMetas(),
+                    _getAllMov(),
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.assessment),
+                  title: Text('Gráficos'),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => Grafico()));
+                    _getAllMetas();
+                    _getAllMov();
+                  },
+                ),
+                ListTile(
+                    leading: Icon(Icons.check_box_rounded),
+                    title: Text('Metas'),
+                    onTap: () =>
+                    {
+                      Navigator.push(context, MaterialPageRoute<void>(
+                          builder: (BuildContext context) {
+                            return MetasHomePage();
+                          })),
+                    _getAllMetas(),
+                    _getAllMov(),
+                    }),
+                ListTile(
+                  leading: Icon(Icons.add_circle),
+                  title: Text('Receitas'),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => TelaReceitas()));
+                    _getAllMetas();
+                    _getAllMov();
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.remove_circle_rounded),
+                  title: Text('Despesas'),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => TelaDespesas()));
+                    _getAllMetas();
+                    _getAllMov();
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.library_books),
+                  title: Text('Dicas'),
+                  onTap: () => {Navigator.of(context).pop(),_getAllMetas(),
+                    _getAllMov()},
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(15, 25, 15, 25),
+                  child: Divider(
+                    color: Colors.black,
+                    thickness: 1,
+                  ),
+                ),
+                ListTile(
+                    leading: Icon(Icons.account_circle_rounded),
+                    title: Text('Meu perfil'),
+                    onTap: () =>
+                    {
+                      Navigator.push(context, MaterialPageRoute<void>(
+                          builder: (BuildContext context) {
+                            return MeuPerfil();
+                          })),
+                    _getAllMetas(),
+                    _getAllMov(),
+                    }),
+                ListTile(
+                  leading: Icon(Icons.exit_to_app),
+                  title: Text('Encerrar sessão'),
+                  onTap: () =>
+                  {Navigator.push(context, MaterialPageRoute<void>(
+                      builder: (BuildContext context) {
+                        return InicialPage();
+                      })),
+                  _getAllMetas(),
+                    _getAllMov(),
+                  },
+                ),
+                ListTile(
+                    leading: Icon(Icons.info_rounded),
+                    title: Text('Sobre'),
+                    onTap: () => {Navigator.push(context, MaterialPageRoute<void>(
+                        builder: (BuildContext context) {
+                          return SobrePage();
+                        })),
+                    _getAllMetas(),
+                    _getAllMov(),
+                    }
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -64,7 +194,7 @@ class _HomeState extends State<Home> {
             Row(
               children: [
                 SizedBox(width: 20.0,),
-                Text("R\$ 2.000,00",style: TextStyle(color: Colors.white,fontSize: 20.0),),
+                Text("R\$ ${saldoAtualmov}0",style: TextStyle(color: Colors.white,fontSize: 20.0),),
               ],
             ),
             SizedBox(
@@ -98,7 +228,7 @@ class _HomeState extends State<Home> {
         SizedBox(width: 30,),
         Center(
             child: Container(
-          child: _reportCell(isSavings: true, title: 'Economia mensal', deposit: '\$5,40', rate: '${SaldoTotalMeta}', progress: 50),
+          child: _reportCell(isSavings: true, title: 'Receita total', deposit: 'R\$${recSum}0', rate: 'R\$${SaldoTotalMeta}0', progress: progRec),
           height: 170,
           width: MediaQuery.of(context).size.width * 0.85,
           decoration: BoxDecoration(
@@ -110,7 +240,7 @@ class _HomeState extends State<Home> {
         SizedBox(width: 20,),
         Center(
             child: Container(
-              child: _reportCell(isSavings: true, title: 'Gasto mensal', deposit: '\$5,40', rate: 'R\$${SaldoTotalMeta}0', progress: 50),
+              child: _reportCell(isSavings: true, title: 'Despesa total', deposit: 'R\$${despSum}0', rate: 'R\$${SaldoTotalMeta}0', progress: progDesp),
               height: 170,
               width: MediaQuery.of(context).size.width * 0.85,
               decoration: BoxDecoration(
@@ -217,7 +347,7 @@ class _HomeState extends State<Home> {
                   ),
                   _reportInnerCell(
                     isSavings: isSavings,
-                    title: 'Meta',
+                    title: 'Total de Metas',
                     value: rate!,
                   ),
                 ],
@@ -256,19 +386,6 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void _showMetasAddMoney({Meta? meta}) async {
-    final recMeta = await Navigator.push(context,
-        MaterialPageRoute(builder: (context) => MetasAddMoney(meta: meta)));
-    if (recMeta != null) {
-      if (meta != null) {
-        await helper.updateMeta(recMeta);
-      } else {
-        await helper.saveMeta(recMeta);
-      }
-      _getAllMetas();
-    }
-  }
-
   void _getAllMetas() {
     helper.getAllMetas().then((list) {
       if(list.isNotEmpty){
@@ -287,6 +404,54 @@ class _HomeState extends State<Home> {
 
     });
   }
+
+  _getAllMov() {
+    helperMov.getAllDespesas().then((list) {
+      List<Despesa> despAux = [];
+      List<Despesa> recAux = [];
+      despSum = 0.0;
+      recSum = 0.0;
+      int x = 0;
+      if (list.isNotEmpty) {
+        setState(() {
+          mov = list as List<Despesa>;
+          for (int i = 0; i < mov.length; i++) {
+            if (mov[i].tipo == "d") {
+              despAux.add(mov[i]);
+              despSum += mov[i].value!;
+              print(despAux);
+            } else if(mov[i].tipo == "r"){
+              recAux.add(mov[i]);
+              recSum += mov[i].value!;
+              print(recAux);
+            }
+          }
+
+          total = recSum - despSum;
+          testeR = ((recSum*100)/double.parse(SaldoTotalMeta!));
+          testeD = ((despSum*100)/double.parse(SaldoTotalMeta!));
+          progRec = testeR.toInt();
+          progDesp = testeD.toInt();
+          saldoAtualmov = total.toString();
+        });
+      } else if (mov.isEmpty) {
+        setState(() {
+          mov.clear();
+          total = 0;
+          saldoAtualmov = total.toString();
+          print(list);
+        });
+      } else {
+        setState(() {
+          mov.clear();
+          total = 0;
+          saldoAtualmov = total.toString();
+          print(list);
+        });
+      }
+    });
+  }
+
 }
 
 
