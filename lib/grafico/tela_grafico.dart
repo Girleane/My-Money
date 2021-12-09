@@ -87,7 +87,7 @@ class _GraficoState extends State<Grafico> {
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(
-          height: 1000.0,
+          height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
             color: const Color(0xffd6daf6),
           ),
