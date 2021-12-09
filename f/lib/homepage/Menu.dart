@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_money_integrated/InicialPage.dart';
+import 'package:my_money_integrated/acesso/InicialPage.dart';
 import 'package:my_money_integrated/despesas/tela_despesas.dart';
 import 'package:my_money_integrated/grafico/tela_grafico.dart';
 import 'package:my_money_integrated/metas/MetasHomePage.dart';
@@ -65,7 +65,7 @@ class Menu extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Icons.library_books),
-              title: Text('Dicas'),
+              title: Text('Dic as'),
               onTap: () => {Navigator.of(context).pop()},
             ),
             Padding(

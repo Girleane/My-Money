@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_money_integrated/acesso/InicialPage.dart';
 import 'package:my_money_integrated/despesas/tela_despesas.dart';
-import 'package:my_money_integrated/dicas/Dicas.dart';
 import 'package:my_money_integrated/grafico/tela_grafico.dart';
 import 'package:my_money_integrated/helpers/despesas_helper.dart';
 import 'package:my_money_integrated/metas/MetasAddMoney.dart';
@@ -11,11 +10,11 @@ import 'package:my_money_integrated/perfil/MeuPerfil.dart';
 import 'package:my_money_integrated/receitas/tela_receitas.dart';
 import 'package:my_money_integrated/sobre/SobrePage.dart';
 
+
 late String username;
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
-
   @override
   _HomeState createState() => _HomeState();
 }
@@ -24,7 +23,7 @@ class _HomeState extends State<Home> {
   bool _isVisible = false;
   String? SaldoTotalMeta;
   double total = 0.0;
-  String? saldoAtualmov = '0';
+  String? saldoAtualmov;
   double despSum = 0.0;
   double recSum = 0.0;
   double testeR = 0.0;
@@ -87,14 +86,15 @@ class _HomeState extends State<Home> {
                 ListTile(
                     leading: Icon(Icons.check_box_rounded),
                     title: Text('Metas'),
-                    onTap: () => {
-                          Navigator.push(context, MaterialPageRoute<void>(
-                              builder: (BuildContext context) {
+                    onTap: () =>
+                    {
+                      Navigator.push(context, MaterialPageRoute<void>(
+                          builder: (BuildContext context) {
                             return MetasHomePage();
                           })),
-                          _getAllMetas(),
-                          _getAllMov(),
-                        }),
+                    _getAllMetas(),
+                    _getAllMov(),
+                    }),
                 ListTile(
                   leading: Icon(Icons.add_circle),
                   title: Text('Receitas'),
@@ -122,14 +122,8 @@ class _HomeState extends State<Home> {
                 ListTile(
                   leading: Icon(Icons.library_books),
                   title: Text('Dicas'),
-                  onTap: () => {
-                    Navigator.push(context, MaterialPageRoute<void>(
-                        builder: (BuildContext context) {
-                      return DicasPage();
-                    })),
-                    _getAllMetas(),
-                    _getAllMov(),
-                  },
+                  onTap: () => {Navigator.of(context).pop(),_getAllMetas(),
+                    _getAllMov()},
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(15, 25, 15, 25),
@@ -141,37 +135,38 @@ class _HomeState extends State<Home> {
                 ListTile(
                     leading: Icon(Icons.account_circle_rounded),
                     title: Text('Meu perfil'),
-                    onTap: () => {
-                          Navigator.push(context, MaterialPageRoute<void>(
-                              builder: (BuildContext context) {
+                    onTap: () =>
+                    {
+                      Navigator.push(context, MaterialPageRoute<void>(
+                          builder: (BuildContext context) {
                             return MeuPerfil();
                           })),
-                          _getAllMetas(),
-                          _getAllMov(),
-                        }),
+                    _getAllMetas(),
+                    _getAllMov(),
+                    }),
                 ListTile(
                   leading: Icon(Icons.exit_to_app),
                   title: Text('Encerrar sessão'),
-                  onTap: () => {
-                    Navigator.push(context, MaterialPageRoute<void>(
-                        builder: (BuildContext context) {
-                      return InicialPage();
-                    })),
-                    _getAllMetas(),
+                  onTap: () =>
+                  {Navigator.push(context, MaterialPageRoute<void>(
+                      builder: (BuildContext context) {
+                        return InicialPage();
+                      })),
+                  _getAllMetas(),
                     _getAllMov(),
                   },
                 ),
                 ListTile(
                     leading: Icon(Icons.info_rounded),
                     title: Text('Sobre'),
-                    onTap: () => {
-                          Navigator.push(context, MaterialPageRoute<void>(
-                              builder: (BuildContext context) {
-                            return SobrePage();
-                          })),
-                          _getAllMetas(),
-                          _getAllMov(),
-                        }),
+                    onTap: () => {Navigator.push(context, MaterialPageRoute<void>(
+                        builder: (BuildContext context) {
+                          return SobrePage();
+                        })),
+                    _getAllMetas(),
+                    _getAllMov(),
+                    }
+                ),
               ],
             ),
           ),
@@ -193,58 +188,28 @@ class _HomeState extends State<Home> {
           children: <Widget>[
             Row(
               children: [
-                SizedBox(
-                  width: 20.0,
-                ),
-                Text(
-                  "Saldo Disponível",
-                  textAlign: TextAlign.start,
-                  style: TextStyle(color: Colors.white, fontSize: 20.0),
-                ),
-                IconButton(
-                    onPressed: () {
-                      setState(() {
-                        _isVisible == true
-                            ? _isVisible = false
-                            : _isVisible = true;
-                      });
-                    },
-                    icon: Icon(
-                      _isVisible == true
-                          ? Icons.lock_outline
-                          : Icons.lock_open_rounded,
-                      color:
-                          _isVisible == true ? Colors.white : Colors.deepOrange,
-                    ))
+                SizedBox(width: 20.0,),
+                Text("Saldo Disponível",textAlign: TextAlign.start,style: TextStyle(color: Colors.white,fontSize: 20.0),),
+                IconButton(onPressed: (){_isVisible = false;}, icon: Icon(Icons.lock,color: Colors.white,))
               ],
             ),
             Row(
               children: [
-                SizedBox(
-                  width: 20.0,
-                ),
-                Text(
-                  "R\$ ${saldoAtualmov}0",
-                  style: TextStyle(color: Colors.white, fontSize: 20.0),
-                ),
+                SizedBox(width: 20.0,),
+                Text("R\$ ${saldoAtualmov}0",style: TextStyle(color: Colors.white,fontSize: 20.0),),
               ],
             ),
             SizedBox(
               height: 20,
             ),
             _mainBody(),
-            SizedBox(
-              height: 40,
-            ),
+            SizedBox(height: 40,),
             Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(40.0),
-                  topLeft: Radius.circular(40.0),
-                ),
+                borderRadius: BorderRadius.only(topRight: Radius.circular(40.0),topLeft: Radius.circular(40.0),),
                 color: Colors.iceMoney,
               ),
-              height: MediaQuery.of(context).size.height * 0.40,
+              height: MediaQuery.of(context).size.height*0.40,
             ),
           ],
         ),
@@ -254,7 +219,7 @@ class _HomeState extends State<Home> {
 
   Container _mainBody() {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.35,
+      height: MediaQuery.of(context).size.height*0.35,
       width: double.infinity,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(
@@ -262,17 +227,10 @@ class _HomeState extends State<Home> {
           ),
           color: Colors.transparent),
       child: ListView(scrollDirection: Axis.horizontal, children: [
-        SizedBox(
-          width: 30,
-        ),
+        SizedBox(width: 30,),
         Center(
             child: Container(
-          child: _reportCell(
-              isSavings: true,
-              title: 'Receita total',
-              deposit: 'R\$${recSum}0',
-              rate: 'R\$${SaldoTotalMeta}0',
-              progress: progRec),
+          child: _reportCell(isSavings: true, title: 'Receita total', deposit: 'R\$${recSum}0', rate: 'R\$${SaldoTotalMeta}0', progress: progRec),
           height: 170,
           width: MediaQuery.of(context).size.width * 0.85,
           decoration: BoxDecoration(
@@ -281,28 +239,19 @@ class _HomeState extends State<Home> {
               ),
               color: Colors.white),
         )),
-        SizedBox(
-          width: 20,
-        ),
+        SizedBox(width: 20,),
         Center(
             child: Container(
-          child: _reportCell(
-              isSavings: true,
-              title: 'Despesa total',
-              deposit: 'R\$${despSum}0',
-              rate: 'R\$${SaldoTotalMeta}0',
-              progress: progDesp),
-          height: 170,
-          width: MediaQuery.of(context).size.width * 0.85,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(
-                Radius.circular(40.0),
-              ),
-              color: Colors.white),
-        )),
-        SizedBox(
-          width: 30,
-        ),
+              child: _reportCell(isSavings: true, title: 'Despesa total', deposit: 'R\$${despSum}0', rate: 'R\$${SaldoTotalMeta}0', progress: progDesp),
+              height: 170,
+              width: MediaQuery.of(context).size.width * 0.85,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(40.0),
+                  ),
+                  color: Colors.white),
+            )),
+        SizedBox(width: 30,),
       ]),
     );
   }
@@ -324,19 +273,19 @@ class _HomeState extends State<Home> {
             : null,
         boxShadow: isSavings
             ? [
-                BoxShadow(
-                  color: _primaryColor.withOpacity(0.7),
-                  offset: Offset(0, 8),
-                  blurRadius: 10,
-                ),
-              ]
+          BoxShadow(
+            color: _primaryColor.withOpacity(0.7),
+            offset: Offset(0, 8),
+            blurRadius: 10,
+          ),
+        ]
             : [
-                BoxShadow(
-                  color: _secondaryColor.withOpacity(0.9),
-                  offset: Offset(0, 8),
-                  blurRadius: 10,
-                ),
-              ],
+          BoxShadow(
+            color: _secondaryColor.withOpacity(0.9),
+            offset: Offset(0, 8),
+            blurRadius: 10,
+          ),
+        ],
       ),
       child: Row(
         children: <Widget>[
@@ -441,7 +390,7 @@ class _HomeState extends State<Home> {
 
   void _getAllMetas() {
     helper.getAllMetas().then((list) {
-      if (list.isNotEmpty) {
+      if(list.isNotEmpty){
         setState(() {
           metas = list as List<Meta>;
           print(list);
@@ -451,9 +400,10 @@ class _HomeState extends State<Home> {
           }).reduce((a, b) => a + b);
           SaldoTotalMeta = totalMeta.toString();
         });
-      } else {
+      }else {
         SaldoTotalMeta = '0.0';
       }
+
     });
   }
 
@@ -472,7 +422,7 @@ class _HomeState extends State<Home> {
               despAux.add(mov[i]);
               despSum += mov[i].value!;
               print(despAux);
-            } else if (mov[i].tipo == "r") {
+            } else if(mov[i].tipo == "r"){
               recAux.add(mov[i]);
               recSum += mov[i].value!;
               print(recAux);
@@ -480,8 +430,8 @@ class _HomeState extends State<Home> {
           }
 
           total = recSum - despSum;
-          testeR = ((recSum * 100) / double.parse(SaldoTotalMeta!));
-          testeD = ((despSum * 100) / double.parse(SaldoTotalMeta!));
+          testeR = ((recSum*100)/double.parse(SaldoTotalMeta!));
+          testeD = ((despSum*100)/double.parse(SaldoTotalMeta!));
           progRec = testeR.toInt();
           progDesp = testeD.toInt();
           saldoAtualmov = total.toString();
@@ -503,10 +453,12 @@ class _HomeState extends State<Home> {
       }
     });
   }
+
 }
 
-class Receber {
-  void receberUser(String user) {
+
+class Receber{
+  void receberUser (String user){
     username = user;
-  }
+ }
 }
